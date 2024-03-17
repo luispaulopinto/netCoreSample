@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Sample.Application\Sample.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sample.Infrastructure\Sample.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sample.Persistence\Sample.Persistence.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Sample.Identity\Sample.Identity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="serilog" Version="3.1.1" />
+    <PackageReference Include="serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

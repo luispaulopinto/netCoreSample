@@ -1,0 +1,94 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Infrastructure/Sample.Identity/Sample.Identity.csproj": {}
+  },
+  "projects": {
+    "/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Infrastructure/Sample.Identity/Sample.Identity.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Infrastructure/Sample.Identity/Sample.Identity.csproj",
+        "projectName": "Sample.Identity",
+        "projectPath": "/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Infrastructure/Sample.Identity/Sample.Identity.csproj",
+        "packagesPath": "/home/luispaulopinto/.nuget/packages/",
+        "outputPath": "/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Infrastructure/Sample.Identity/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/luispaulopinto/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.extensions.dependencyinjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/luispaulopinto/.dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

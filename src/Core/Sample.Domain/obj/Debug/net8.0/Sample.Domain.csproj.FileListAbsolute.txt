@@ -1,0 +1,11 @@
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/bin/Debug/net8.0/Sample.Domain.deps.json
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/bin/Debug/net8.0/Sample.Domain.dll
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/bin/Debug/net8.0/Sample.Domain.pdb
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.AssemblyInfoInputs.cache
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.AssemblyInfo.cs
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.csproj.CoreCompileInputs.cache
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.dll
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/refint/Sample.Domain.dll
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/Sample.Domain.pdb
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/Core/Sample.Domain/obj/Debug/net8.0/ref/Sample.Domain.dll
