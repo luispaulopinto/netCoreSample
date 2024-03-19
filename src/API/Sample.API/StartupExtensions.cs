@@ -20,7 +20,7 @@ namespace Sample.Api
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);
-            builder.Services.AddIdentityServices(builder.Configuration);
+            //builder.Services.AddIdentityServices(builder.Configuration);
 
             builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
 
@@ -46,13 +46,13 @@ namespace Sample.Api
 
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
-            app.MapIdentityApi<ApplicationUser>();
+            //app.MapIdentityApi<ApplicationUser>();
 
-            app.MapPost("/Logout", async (ClaimsPrincipal user, SignInManager<ApplicationUser> signInManager) =>
-            {
-                await signInManager.SignOutAsync();
-                return TypedResults.Ok();
-            });
+            // app.MapPost("/Logout", async (ClaimsPrincipal user, SignInManager<ApplicationUser> signInManager) =>
+            // {
+            //     await signInManager.SignOutAsync();
+            //     return TypedResults.Ok();
+            // });
 
             app.UseCors("open");
 

@@ -8,6 +8,7 @@ namespace Sample.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class CategoryController : ControllerBase
     {
         private readonly IMediator _mediator;

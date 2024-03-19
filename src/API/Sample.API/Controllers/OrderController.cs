@@ -5,6 +5,7 @@ namespace Sample.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;

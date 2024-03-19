@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Sample.Api.Controllers
 {
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     public class EventsController : Controller
     {

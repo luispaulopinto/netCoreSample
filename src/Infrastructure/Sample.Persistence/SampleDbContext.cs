@@ -37,6 +37,85 @@ namespace Sample.Persistence
             var playGuid = Guid.Parse("{BF3F3002-7E53-441E-8B76-F6280BE284AA}");
             var conferenceGuid = Guid.Parse("{FE98F549-E790-4E9F-AA16-18C2292A2EE9}");
 
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 1, Name = "Grupo AAAA", ParentClientId = null, Type = "Grupo" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 2, Name = "Rede AAAA", ParentClientId = 1, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 3, Name = "Parceiro  AAAA", ParentClientId = 2, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 4, Name = "Hotel  AAAA1", ParentClientId = 3, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 5, Name = "Hotel  AAAA1", ParentClientId = 3, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 42, Name = "Rede AAAB", ParentClientId = 1, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 43, Name = "Parceiro  AAAB", ParentClientId = 42, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 44, Name = "Hotel  AAAB", ParentClientId = 43, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 45, Name = "Hotel  AAAB", ParentClientId = 43, Type = "Hotel" });
+
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 6, Name = "Grupo BBBB", ParentClientId = null, Type = "Grupo" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 7, Name = "Rede BBBB", ParentClientId = 6, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 8, Name = "Parceiro  BBBB", ParentClientId = 7, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 9, Name = "Hotel  BBBB1", ParentClientId = 8, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 10, Name = "Hotel  BBBB1", ParentClientId = 8, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 47, Name = "Parceiro  BBBC", ParentClientId = 6, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 48, Name = "Hotel  BBBC1", ParentClientId = 47, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 49, Name = "Hotel  BBBC1", ParentClientId = 47, Type = "Hotel" });
+
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 11, Name = "Grupo CCCC", ParentClientId = null, Type = "Grupo" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 12, Name = "Rede CCCC", ParentClientId = 11, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 13, Name = "Parceiro  CCCC", ParentClientId = 12, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 14, Name = "Hotel  CCCC1", ParentClientId = 13, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 15, Name = "Hotel  CCCC1", ParentClientId = 13, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 50, Name = "Parceiro  CCCD", ParentClientId = 12, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 51, Name = "Hotel  CCCD1", ParentClientId = 50, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 52, Name = "Hotel  CCCD1", ParentClientId = 50, Type = "Hotel" });
+
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 16, Name = "Grupo DDDD", ParentClientId = null, Type = "Grupo" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 17, Name = "Rede DDDD", ParentClientId = 16, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 18, Name = "Parceiro  DDDD", ParentClientId = 17, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 19, Name = "Hotel  DDDD1", ParentClientId = 18, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 20, Name = "Hotel  DDDD1", ParentClientId = 18, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 53, Name = "Hotel  DDDE1", ParentClientId = 16, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 54, Name = "Hotel  DDDE1", ParentClientId = 16, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 21, Name = "Grupo EEEE", ParentClientId = null, Type = "Grupo" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 22, Name = "Rede EEEE", ParentClientId = 21, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 23, Name = "Parceiro  EEEE", ParentClientId = 22, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 24, Name = "Hotel  EEEE1", ParentClientId = 23, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 25, Name = "Hotel  EEEE1", ParentClientId = 23, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 26, Name = "Rede AAA", ParentClientId = null, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 27, Name = "Parceiro  AAA", ParentClientId = 26, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 28, Name = "Hotel  AAA1", ParentClientId = 27, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 29, Name = "Hotel  AAA1", ParentClientId = 27, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 30, Name = "Rede BBB", ParentClientId = null, Type = "Rede" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 31, Name = "Parceiro  BBB", ParentClientId = 30, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 32, Name = "Hotel  BBB1", ParentClientId = 31, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 33, Name = "Hotel  BBB1", ParentClientId = 31, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 34, Name = "Parceiro  AA", ParentClientId = null, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 35, Name = "Hotel  AA1", ParentClientId = 34, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 36, Name = "Hotel  AA1", ParentClientId = 34, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 37, Name = "Parceiro  BB", ParentClientId = null, Type = "Parceiro" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 38, Name = "Hotel  BB1", ParentClientId = 37, Type = "Hotel" });
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 39, Name = "Hotel  BB1", ParentClientId = 37, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 40, Name = "Hotel  A1", ParentClientId = null, Type = "Hotel" });
+
+            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 41, Name = "Hotel  B1", ParentClientId = null, Type = "Hotel" });
+
+
+
+
+
+
+
+
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = concertGuid,

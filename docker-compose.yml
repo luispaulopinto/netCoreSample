@@ -9,4 +9,14 @@ services:
       context: .
       dockerfile: src/API/Sample.API/Dockerfile
     ports:
-      - 5211:5211
+      - 8080:7020
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 5433:5433
+    environment:
+      - POSTGRES_PASSWORD=postgres

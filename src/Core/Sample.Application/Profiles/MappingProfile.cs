@@ -2,6 +2,8 @@
 using Sample.Application.Features.Categories.Commands.CreateCateogry;
 using Sample.Application.Features.Categories.Queries.GetCategoriesList;
 using Sample.Application.Features.Categories.Queries.GetCategoriesListWithEvents;
+using Sample.Application.Features.Clients.Queries.GetClientDetail;
+using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 using Sample.Application.Features.Events.Commands.CreateEvent;
 using Sample.Application.Features.Events.Commands.UpdateEvent;
 using Sample.Application.Features.Events.Queries.GetEventDetail;
@@ -18,19 +20,24 @@ namespace Sample.Application.Profiles
         {
             CreateMap<Event, EventListVm>().ReverseMap();
             CreateMap<Event, EventDetailVm>().ReverseMap();
+            CreateMap<Event, CategoryEventDto>().ReverseMap();
+            CreateMap<Event, EventExportDto>().ReverseMap();
+            CreateMap<Event, CreateEventCommand>().ReverseMap();
+            CreateMap<Event, UpdateEventCommand>().ReverseMap();
+            CreateMap<Event, CategoryEventDto>().ReverseMap();
+
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, CategoryListVm>().ReverseMap();
             CreateMap<Category, CategoryEventListVm>().ReverseMap();
             CreateMap<Category, CreateCategoryCommand>().ReverseMap();
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
-            CreateMap<Event, CategoryEventDto>().ReverseMap();
-            CreateMap<Event, EventExportDto>().ReverseMap();
-
-            CreateMap<Event, CreateEventCommand>().ReverseMap();
-            CreateMap<Event, UpdateEventCommand>().ReverseMap();
-            CreateMap<Event, CategoryEventDto>().ReverseMap();
 
             CreateMap<Order, OrdersForMonthDto>();
+
+            CreateMap<Client, ClientListWithSubClientsVm>().ReverseMap();
+            CreateMap<Client, ClientDetailVm>()
+            .ForMember(dest => dest.ParentId, input => input.MapFrom(i => i.ParentClientId))
+            .ReverseMap();
         }
     }
 }
