@@ -30,7 +30,7 @@
       "name": "Docker .NET Launch",
       "type": "docker",
       "request": "launch",
-      "preLaunchTask": "docker-run: debug",
+      "preLaunchTask": "docker-run: debug",      
       "netCore": {
         "appProject": "${workspaceFolder}/src/API/Sample.API/Sample.API.csproj"
       }

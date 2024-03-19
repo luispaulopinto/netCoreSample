@@ -1,8 +1,0 @@
-{
-  "Sample.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/API\/Sample.API",
-  "Sample.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/Core\/Sample.Application",
-  "Sample.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/Core\/Sample.Domain",
-  "Sample.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/Infrastructure\/Sample.Identity",
-  "Sample.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/Infrastructure\/Sample.Infrastructure",
-  "Sample.Persistence, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/luispaulopinto\/Projetos_linux\/pluralsight\/net_core_clean_arch\/src\/Infrastructure\/Sample.Persistence"
-}
