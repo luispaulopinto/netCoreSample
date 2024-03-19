@@ -172,3 +172,4 @@
 /home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/API/Sample.API/bin/Debug/net8.0/Serilog.Sinks.File.dll
 /home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/API/Sample.API/bin/Debug/net8.0/Sample.Identity.dll
 /home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/API/Sample.API/bin/Debug/net8.0/Sample.Identity.pdb
+/home/luispaulopinto/Projetos_linux/pluralsight/net_core_clean_arch/src/API/Sample.API/obj/Debug/net8.0/Sample.API.sourcelink.json
