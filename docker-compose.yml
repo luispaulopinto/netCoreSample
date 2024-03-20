@@ -9,14 +9,22 @@ services:
       context: .
       dockerfile: src/API/Sample.API/Dockerfile
     ports:
-      - 8080:7020
+      - 5211:5211
+    networks:
+      - sampleApiNetwork
     depends_on:
       - database
 
   database:
     image: postgres
-    restart: always
+    # restart: always
     ports:
       - 5433:5433
+    networks:
+      - sampleApiNetwork
     environment:
       - POSTGRES_PASSWORD=postgres
+
+networks:
+  sampleApiNetwork:
+    driver: bridge

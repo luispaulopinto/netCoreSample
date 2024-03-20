@@ -1,0 +1,17 @@
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS base
+WORKDIR /app
+USER app
+
+FROM base AS dbconfigs
+WORKDIR /projects
+COPY ["src/API/Sample.API/*", "src/API/Sample.API/"]
+COPY ["src/Infrastructure/Sample.Persistence/*", "src/Infrastructure/Sample.Persistence/"]
+# COPY . .
+# WORKDIR "/projects/src/API/Sample.API"
+
+FROM dbconfigs as migrations
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# FROM migrations as final
+# ENTRYPOINT dotnet-ef database update --project src/Infrastructure/Sample.Persistence --startup-project src/Api/Sample.API --context SampleDbContext

@@ -40,7 +40,9 @@
     {
       "type": "docker-build",
       "label": "docker-build: debug",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "dockerBuild": {
         "tag": "netcorecleanarch:dev",
         "target": "base",
@@ -55,7 +57,9 @@
     {
       "type": "docker-build",
       "label": "docker-build: release",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "dockerBuild": {
         "tag": "netcorecleanarch:latest",
         "dockerfile": "${workspaceFolder}/src/API/Sample.API/Dockerfile",
@@ -73,17 +77,29 @@
     {
       "type": "docker-run",
       "label": "docker-run: debug",
-      "dependsOn": ["docker-build: debug"],
-      "dockerRun": {},
+      "dependsOn": [
+        "docker-build: debug"
+      ],
+      "dockerRun": {
+        "ports": [
+          {
+            "hostPort": 5211,
+            "containerPort": 5211,            
+          }
+        ],
+        "network": "sampleNetwork"
+      },
       "netCore": {
         "appProject": "${workspaceFolder}/src/API/Sample.API/Sample.API.csproj",
-        "enableDebugging": true
+        "enableDebugging": true,
       }
     },
     {
       "type": "docker-run",
       "label": "docker-run: release",
-      "dependsOn": ["docker-build: release"],
+      "dependsOn": [
+        "docker-build: release"
+      ],
       "dockerRun": {},
       "netCore": {
         "appProject": "${workspaceFolder}/src/API/Sample.API/Sample.API.csproj"
