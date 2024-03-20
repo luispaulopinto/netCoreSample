@@ -13,6 +13,16 @@ services:
     networks:
       - sampleApiNetwork
     depends_on:
+      - migrations
+
+  migrations:
+    image: ef-migrations
+    build:
+      context: .
+      dockerfile: src/API/Sample.API/Dockerfile.Migrations
+    networks:
+      - sampleApiNetwork
+    depends_on:
       - database
 
   database:
