@@ -13,27 +13,34 @@ services:
     networks:
       - sampleApiNetwork
     depends_on:
-      - migrations
-
-  migrations:
-    image: ef-migrations
-    build:
-      context: .
-      dockerfile: src/API/Sample.API/Dockerfile.Migrations
-    networks:
-      - sampleApiNetwork
-    depends_on:
-      - database
+      migrations:
+        condition: service_healthy
 
   database:
     image: postgres
     # restart: always
     ports:
-      - 5433:5433
+      - 5433:5432
     networks:
       - sampleApiNetwork
     environment:
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test_database
+
+  migrations:
+    build:
+      context: .
+      dockerfile: src/API/Sample.API/Dockerfile
+    networks:
+      - sampleApiNetwork
+    depends_on:
+      - database
+    command: ["./wait-for-db-and-migrate.sh", "dotnet", "ef", "database", "update"]
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(psql -h db -U postgres -d test_database -c 'SELECT 1' >/dev/null 2>&1) $$? -eq 0 ]"]
+      interval: 10s
+      retries: 5
 
 networks:
   sampleApiNetwork:
