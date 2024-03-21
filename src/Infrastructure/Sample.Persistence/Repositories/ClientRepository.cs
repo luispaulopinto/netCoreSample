@@ -5,7 +5,7 @@ using Sample.Domain.Entities;
 
 namespace Sample.Persistence.Repositories
 {
-    public class ClientRepository : BaseRepository<Event>, IClientRepository
+    public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
         public ClientRepository(SampleDbContext dbContext) : base(dbContext)
         {
@@ -45,6 +45,6 @@ namespace Sample.Persistence.Repositories
             var query = _dbContext.Clients.Where(c => c.ParentClient == null).Select(GetClientProjection(7, 0)).OrderBy(x => x.ClientId);
 
             return await query.ToListAsync();
-        }
+        }       
     }
 }

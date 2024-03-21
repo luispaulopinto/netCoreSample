@@ -4,7 +4,7 @@ using Moq;
 
 namespace Sample.Application.UnitTests.Mocks
 {
-    public class RepositoryMocks
+    public class CategoryRepositoryMocks
     {
         public static Mock<IAsyncRepository<Category>> GetCategoryRepository()
         {
@@ -38,6 +38,7 @@ namespace Sample.Application.UnitTests.Mocks
             };
 
             var mockCategoryRepository = new Mock<IAsyncRepository<Category>>();
+            
             mockCategoryRepository.Setup(repo => repo.ListAllAsync()).ReturnsAsync(categories);
 
             mockCategoryRepository.Setup(repo => repo.AddAsync(It.IsAny<Category>())).ReturnsAsync(

@@ -16,7 +16,7 @@ namespace Sample.Application.UnitTests.Categories.Queries
 
         public GetCategoriesListQueryHandlerTests()
         {
-            _mockCategoryRepository = RepositoryMocks.GetCategoryRepository();
+            _mockCategoryRepository = CategoryRepositoryMocks.GetCategoryRepository();
             var configurationProvider = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
