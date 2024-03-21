@@ -5,43 +5,48 @@ version: '3.4'
 services:
   sampleapi:
     image: sampleapi
+    container_name: apiFromCompose
     build:
       context: .
       dockerfile: src/API/Sample.API/Dockerfile
     ports:
       - 5211:5211
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     networks:
-      - sampleApiNetwork
+      - sampleNetwork
     depends_on:
-      migrations:
-        condition: service_healthy
+      - postgres
+      # migrations:
+      #   condition: service_healthy
 
-  database:
+  postgres:
     image: postgres
+    container_name: postgresFromCompose
     # restart: always
     ports:
-      - 5433:5432
+      - 5432:5432
     networks:
-      - sampleApiNetwork
+      - sampleNetwork
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=test_database
 
-  migrations:
-    build:
-      context: .
-      dockerfile: src/API/Sample.API/Dockerfile
-    networks:
-      - sampleApiNetwork
-    depends_on:
-      - database
-    command: ["./wait-for-db-and-migrate.sh", "dotnet", "ef", "database", "update"]
-    healthcheck:
-      test: ["CMD-SHELL", "[ $$(psql -h db -U postgres -d test_database -c 'SELECT 1' >/dev/null 2>&1) $$? -eq 0 ]"]
-      interval: 10s
-      retries: 5
+  # migrations:
+  #   build:
+  #     context: .
+  #     dockerfile: src/API/Sample.API/Dockerfile
+  #   networks:
+  #     - sampleApiNetwork
+  #   depends_on:
+  #     - database
+  #   command: ["./wait-for-db-and-migrate.sh", "dotnet", "ef", "database", "update"]
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "[ $$(psql -h db -U postgres -d test_database -c 'SELECT 1' >/dev/null 2>&1) $$? -eq 0 ]"]
+  #     interval: 10s
+  #     retries: 5
 
 networks:
-  sampleApiNetwork:
+  sampleNetwork:
     driver: bridge

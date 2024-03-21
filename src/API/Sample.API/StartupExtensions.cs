@@ -90,6 +90,7 @@ namespace Sample.Api
             }
             catch (Exception ex)
             {
+                Console.WriteLine("ResetDatabaseAsync Error");
                 //add logging here later on
             }
         }

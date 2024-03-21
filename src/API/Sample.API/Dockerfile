@@ -3,6 +3,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5211
 
+
+
 # Define a variável de ambiente para configurar a porta HTTP
 ENV ASPNETCORE_HTTP_PORTS=5211
 #ENV ASPNETCORE_URLS=http://+:5211
@@ -13,6 +15,10 @@ USER app
 # Define a imagem base para o estágio de compilação
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
+# FROM dbconfigs as migrations
+# RUN dotnet tool install --global dotnet-ef
+# ENV PATH="$PATH:/root/.dotnet/tools"
+
 
 # Define o diretório de trabalho e copia o arquivo de projeto para o contêiner
 WORKDIR /projects
@@ -23,18 +29,33 @@ RUN dotnet restore "src/API/Sample.API/Sample.API.csproj"
 COPY . .
 
 # Copia o script de inicialização e define permissões de execução
-COPY ["src/API/Sample.API/wait-for-db-and-migrate.sh", "."]
+# COPY ["src/API/Sample.API/wait-for-db-and-migrate.sh", "."]
 # Definindo permissões de execução para o script
 # RUN chmod +x "wait-for-db-and-migrate.sh"
+# RUN dotnet tool install --global dotnet-ef
+# RUN dotnet ef database update --verbose --context SampleddDbContext
+# RUN /root/.dotnet/tools/dotnet-ef database update
+# RUN dotnet ef database update --verbose --startup-project ../../API/Sample.API --context SampleDbContext
+# RUN dotnet ef database update --verbose --startup-project src/Api/Sample.API --context SampleDbContext
+
+# RUN ls -la /projects/src/API/Sample.API
+
+# RUN dotnet ef database update --verbose  --project /projects/src/Infrastructure/Sample.Persistence --startup-project /projects/src/Api/Sample.API --context SampleDbContext
 
 # Exibe explicitamente o conteúdo do diretório /projects
-RUN ls -la /projects
+# RUN ls -la /projects
 
 # Define o diretório de trabalho para a compilação do projeto
 WORKDIR "/projects/src/API/Sample.API"
 
+
+
 # Compila o projeto
 RUN dotnet build "Sample.API.csproj" -c $configuration -o /app/build
+
+# FROM migrations as run-migrations
+# WORKDIR /projects
+# RUN dotnet ef database update --verbose --project src/Infrastructure/Sample.Persistence --startup-project src/Api/Sample.API --context SampleDbContext
 
 # Define a imagem base para o estágio de publicação
 FROM build AS publish
@@ -53,7 +74,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Copia o script de inicialização do diretório de construção para o diretório de trabalho final
-COPY --from=build  /projects/wait-for-db-and-migrate.sh .
+# COPY --from=build  /projects/wait-for-db-and-migrate.sh .
 # Define permissões de execução para o script
 # RUN chmod +x "wait-for-db-and-migrate.sh"
 
@@ -62,3 +83,4 @@ ENTRYPOINT ["dotnet", "Sample.API.dll"]
 
 
 # docker container run -d --name 'test-dev' -p5211:5211  --env 'ASPNETCORE_ENVIRONMENT=Development' sample/cadastro:test
+# docker run -d --name 'test-dev' -p5211:5211  --env 'ASPNETCORE_ENVIRONMENT=Development' sample/cadastro:test
