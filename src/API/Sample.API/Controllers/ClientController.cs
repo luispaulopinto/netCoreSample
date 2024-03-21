@@ -2,6 +2,7 @@
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sample.Application.Features.Clients.Commands.CreateClient;
 using Sample.Application.Features.Clients.Queries.GetClientDetail;
 using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 
@@ -33,6 +34,13 @@ namespace Sample.Api.Controllers
             var getClientDetail = new GetClientDetailQuery() { ClientId = id, IncludeChildren = includeChildren };
 
             return Ok(await _mediator.Send(getClientDetail));
+        }
+
+        [HttpPost(Name = "AddClient")]
+        public async Task<ActionResult<CreateClientCommandResponse>> Create([FromBody] CreateClientCommand createClientCommand)
+        {
+            var response = await _mediator.Send(createClientCommand);
+            return Ok(response);
         }
 
     }

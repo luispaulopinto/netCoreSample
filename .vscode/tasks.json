@@ -84,10 +84,10 @@
         "ports": [
           {
             "hostPort": 5211,
-            "containerPort": 5211,            
+            "containerPort": 5211,
           }
         ],
-        "network": "sampleNetwork"
+        "network": "netcoresample_sampleNetwork",        
       },
       "netCore": {
         "appProject": "${workspaceFolder}/src/API/Sample.API/Sample.API.csproj",
