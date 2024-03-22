@@ -80,7 +80,8 @@
       "dependsOn": [
         "docker-build: debug"
       ],
-      "dockerRun": {
+      "dockerRun": {        
+         "containerName": "Api-Docker-Debug",
         "ports": [
           {
             "hostPort": 5211,
