@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using Sample.Application.Contracts.Persistence;
-using Sample.Domain.Entities;
 using MediatR;
+using Sample.Application.Contracts.Persistence;
+using Sample.Application.Exceptions;
+using Sample.Domain.Entities;
 
 namespace Sample.Application.Features.Events.Commands.UpdateEvent
 {
@@ -18,12 +19,11 @@ namespace Sample.Application.Features.Events.Commands.UpdateEvent
 
         public async Task Handle(UpdateEventCommand request, CancellationToken cancellationToken)
         {
+            var clientToUpdate = await _eventRepository.GetByIdAsync(request.EventId);
 
-            var eventToUpdate = await _eventRepository.GetByIdAsync(request.EventId);
+            _mapper.Map(request, clientToUpdate, typeof(UpdateEventCommand), typeof(Event));
 
-            _mapper.Map(request, eventToUpdate, typeof(UpdateEventCommand), typeof(Event));
-
-            await _eventRepository.UpdateAsync(eventToUpdate);
+            await _eventRepository.UpdateAsync(clientToUpdate);
         }
     }
 }

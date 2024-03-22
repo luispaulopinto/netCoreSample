@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using MediatR;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
-using MediatR;
 
 namespace Sample.Application.Features.Events.Commands.DeleteEvent
 {

@@ -3,6 +3,7 @@ using Sample.Application.Features.Categories.Commands.CreateCateogry;
 using Sample.Application.Features.Categories.Queries.GetCategoriesList;
 using Sample.Application.Features.Categories.Queries.GetCategoriesListWithEvents;
 using Sample.Application.Features.Clients.Commands.CreateClient;
+using Sample.Application.Features.Clients.Commands.UpdateClient;
 using Sample.Application.Features.Clients.Queries.GetClientDetail;
 using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 using Sample.Application.Features.Events.Commands.CreateEvent;
@@ -37,13 +38,12 @@ namespace Sample.Application.Profiles
 
             CreateMap<Client, ClientListWithSubClientsVm>().ReverseMap();
             CreateMap<Client, ClientDetailVm>()
-            .ForMember(dest => dest.ParentId, input => input.MapFrom(i => i.ParentClientId))
-            .ReverseMap();
-            
+                .ForMember(dest => dest.ParentId, input => input.MapFrom(i => i.ParentClientId))
+                .ReverseMap();
+
             CreateMap<Client, CreateClientDto>().ReverseMap();
-
-
-            
+            CreateMap<Client, CreateClientCommand>().ReverseMap();
+            CreateMap<Client, UpdateClientCommand>().ReverseMap();
         }
     }
 }
