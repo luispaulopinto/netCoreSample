@@ -1,11 +1,12 @@
 using AutoMapper;
+using MediatR;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
-using MediatR;
 
 namespace Sample.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, CreateClientCommandResponse>
+    public class CreateClientCommandHandler
+        : IRequestHandler<CreateClientCommand, CreateClientCommandResponse>
     {
         private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
@@ -16,7 +17,10 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
             _clientRepository = clientRepository;
         }
 
-        public async Task<CreateClientCommandResponse> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<CreateClientCommandResponse> Handle(
+            CreateClientCommand request,
+            CancellationToken cancellationToken
+        )
         {
             var createClientCommandResponse = new CreateClientCommandResponse();
 
@@ -34,10 +38,7 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
             }
             if (createClientCommandResponse.Success)
             {
-                var client = new Client() { 
-                    Name = request.Name,
-                    Type = request.Type
-                     };
+                var client = new Client() { Name = request.Name, Type = request.Type };
                 client = await _clientRepository.AddAsync(client);
                 createClientCommandResponse.Client = _mapper.Map<CreateClientDto>(client);
             }

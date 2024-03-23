@@ -1,21 +1,20 @@
-﻿using Sample.Application;
-using Sample.Infrastructure;
-using Sample.Persistence;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Sample.Application.Contracts;
+using Sample.Api.Middleware;
 using Sample.Api.Services;
+using Sample.Application;
+using Sample.Application.Contracts;
 using Sample.Identity;
 using Sample.Identity.Models;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using Sample.Api.Middleware;
+using Sample.Infrastructure;
+using Sample.Persistence;
 
 namespace Sample.Api
 {
     public static class StartupExtensions
     {
-        public static WebApplication ConfigureServices(
-            this WebApplicationBuilder builder)
+        public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -26,17 +25,31 @@ namespace Sample.Api
 
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddControllers();
+            builder
+                .Services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true;
+                    // options.SuppressInferBindingSourcesForParameters = true;
+                });
 
-            builder.Services.AddCors(
-                options => options.AddPolicy(
+            builder.Services.AddCors(options =>
+                options.AddPolicy(
                     "open",
-                    policy => policy.WithOrigins([builder.Configuration["ApiUrl"] ?? "https://localhost:7081",
-                        builder.Configuration["BlazorUrl"] ?? "https://localhost:7080"])
-            .AllowAnyMethod()
-            .SetIsOriginAllowed(pol => true)
-            .AllowAnyHeader()
-            .AllowCredentials()));
+                    policy =>
+                        policy
+                            .WithOrigins(
+                                [
+                                    builder.Configuration["ApiUrl"] ?? "https://localhost:7081",
+                                    builder.Configuration["BlazorUrl"] ?? "https://localhost:7080"
+                                ]
+                            )
+                            .AllowAnyMethod()
+                            .SetIsOriginAllowed(pol => true)
+                            .AllowAnyHeader()
+                            .AllowCredentials()
+                )
+            );
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -64,7 +77,7 @@ namespace Sample.Api
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("../swagger/v1/swagger.json", "Test API V1");
-                    c.RoutePrefix = string.Empty;// Set Swagger UI at apps root
+                    c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
                 });
             }
 

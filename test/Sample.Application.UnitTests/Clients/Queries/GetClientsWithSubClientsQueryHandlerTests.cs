@@ -12,12 +12,12 @@ namespace Sample.Application.UnitTests.Categories.Queries
     // dotnet test --filter Category=CLients
     // dotnet test --filter "Category=CLients|Category=xxx"
     [Trait("Category", "Clients")]
-    public class GetClientsWithSubClientsQueryHandlerTests
+    public class GetClientsWithSubClientsQueryHandlerShould
     {
         private readonly IMapper _mapper;
         private readonly Mock<IClientRepository> _mockClientsRepository;
 
-        public GetClientsWithSubClientsQueryHandlerTests()
+        public GetClientsWithSubClientsQueryHandlerShould()
         {
             _mockClientsRepository = ClientRepositoryMocks.GetClientRepository();
 
@@ -31,15 +31,28 @@ namespace Sample.Application.UnitTests.Categories.Queries
 
         [Fact]
         // [Fact(Skip = 'dont run')]
-        public async Task GetCategoriesListTest()
+        public async Task GetClientsWithSubClients()
         {
-            var handler = new GetClientsWithSubClientsQueryHandler(_mapper, _mockClientsRepository.Object);
+            var handler = new GetClientsWithSubClientsQueryHandler(
+                _mapper,
+                _mockClientsRepository.Object
+            );
 
-            var result = await handler.Handle(new GetClientsWithSubClientsQuery(), CancellationToken.None);
+            var result = await handler.Handle(
+                new GetClientsWithSubClientsQuery(),
+                CancellationToken.None
+            );
 
             result.ShouldBeOfType<List<ClientListWithSubClientsVm>>();
 
-            result.Count.ShouldBe(5);
+            result.Count.ShouldBe(1);
+            result.First().ChildrenClient.Count.ShouldBe(1);
+            result.First().ChildrenClient.First().ChildrenClient.Count.ShouldBe(1);
+            result
+                .First()
+                .ChildrenClient.First()
+                .ChildrenClient.First()
+                .ChildrenClient.Count.ShouldBe(2);
         }
     }
 }
