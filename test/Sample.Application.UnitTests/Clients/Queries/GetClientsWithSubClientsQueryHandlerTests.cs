@@ -9,6 +9,9 @@ using Shouldly;
 
 namespace Sample.Application.UnitTests.Categories.Queries
 {
+    // dotnet test --filter Category=CLients
+    // dotnet test --filter "Category=CLients|Category=xxx"
+    [Trait("Category", "Clients")]
     public class GetClientsWithSubClientsQueryHandlerTests
     {
         private readonly IMapper _mapper;
@@ -27,6 +30,7 @@ namespace Sample.Application.UnitTests.Categories.Queries
         }
 
         [Fact]
+        // [Fact(Skip = 'dont run')]
         public async Task GetCategoriesListTest()
         {
             var handler = new GetClientsWithSubClientsQueryHandler(_mapper, _mockClientsRepository.Object);
