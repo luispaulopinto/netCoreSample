@@ -1,14 +1,15 @@
 using AutoMapper;
+using Moq;
 using Sample.Application.Contracts.Persistence;
 using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 using Sample.Application.Profiles;
 using Sample.Application.UnitTests.Mocks;
 using Sample.Domain.Entities;
-using Moq;
 using Shouldly;
 
 namespace Sample.Application.UnitTests.Categories.Queries
 {
+
     // dotnet test --filter Category=CLients
     // dotnet test --filter "Category=CLients|Category=xxx"
     [Trait("Category", "Clients")]
@@ -30,6 +31,7 @@ namespace Sample.Application.UnitTests.Categories.Queries
         }
 
         [Fact]
+
         // [Fact(Skip = 'dont run')]
         public async Task GetClientsWithSubClients()
         {
