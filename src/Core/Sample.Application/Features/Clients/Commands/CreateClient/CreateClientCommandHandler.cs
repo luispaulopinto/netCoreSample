@@ -38,7 +38,21 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
             }
             if (createClientCommandResponse.Success)
             {
-                var client = new Client() { Name = request.Name, Type = request.Type };
+                var client = new Client()
+                {
+                    Name = request.Name,
+                    Type = request.Type,
+                    TradeName = request.TradeName,
+                    RegisteredNumber = request.RegisteredNumber,
+                    StateRegistration = request.StateRegistration,
+                    IsStateRegistrationFree = request.IsStateRegistrationFree,
+                    LogoURL = request.LogoURL,
+                    Language = request.Language,
+                    CurrencyType = request.CurrencyType,
+                    TimeZone = request.TimeZone,
+                    Origin = request.Origin,
+                };
+
                 client = await _clientRepository.AddAsync(client);
                 createClientCommandResponse.Client = _mapper.Map<CreateClientDto>(client);
             }

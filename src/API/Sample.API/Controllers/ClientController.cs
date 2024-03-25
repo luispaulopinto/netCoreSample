@@ -21,9 +21,13 @@ namespace Sample.Api.Controllers
 
         [HttpGet(Name = "GetAllClientsWithSubClients")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<ClientListWithSubClientsVm>>> GetAllClients()
+        public async Task<ActionResult<List<ClientListWithSubClientsVm>>> GetAllClients(
+            string? type
+        )
         {
-            var dtos = await _mediator.Send(new GetClientsWithSubClientsQuery());
+            var dtos = await _mediator.Send(
+                new GetClientsWithSubClientsQuery() { Type = type ?? string.Empty }
+            );
             return Ok(dtos);
         }
 

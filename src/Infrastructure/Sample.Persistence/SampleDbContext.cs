@@ -1,8 +1,8 @@
-﻿using Sample.Domain.Common;
-using Sample.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Sample.Application.Contracts;
+using Sample.Domain.Common;
+using Sample.Domain.Entities;
 
 namespace Sample.Persistence
 {
@@ -11,11 +11,12 @@ namespace Sample.Persistence
         private readonly ILoggedInUserService? _loggedInUserService;
 
         public SampleDbContext(DbContextOptions<SampleDbContext> options)
-           : base(options)
-        {
-        }
+            : base(options) { }
 
-        public SampleDbContext(DbContextOptions<SampleDbContext> options, ILoggedInUserService loggedInUserService)
+        public SampleDbContext(
+            DbContextOptions<SampleDbContext> options,
+            ILoggedInUserService loggedInUserService
+        )
             : base(options)
         {
             _loggedInUserService = loggedInUserService;
@@ -31,249 +32,1085 @@ namespace Sample.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SampleDbContext).Assembly);
 
-            //seed data, added through migrations
-            var concertGuid = Guid.Parse("{B0788D2F-8003-43C1-92A4-EDC76A7C5DDE}");
-            var musicalGuid = Guid.Parse("{6313179F-7837-473A-A4D5-A5571B43E6A6}");
-            var playGuid = Guid.Parse("{BF3F3002-7E53-441E-8B76-F6280BE284AA}");
-            var conferenceGuid = Guid.Parse("{FE98F549-E790-4E9F-AA16-18C2292A2EE9}");
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 1,
+                        Name = "Grupo AAAA",
+                        TradeName = "Grupo AAAA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Grupo"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 2,
+                        Name = "Rede AAAA",
+                        TradeName = "Rede AAAA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 1,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 3,
+                        Name = "Parceiro  AAAA",
+                        TradeName = "Parceiro  AAAA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 2,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 4,
+                        Name = "Hotel  AAAA1",
+                        TradeName = "Hotel  AAAA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 3,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 5,
+                        Name = "Hotel  AAAA1",
+                        TradeName = "Hotel  AAAA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 3,
+                        Type = "Hotel"
+                    }
+                );
 
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 42,
+                        Name = "Rede AAAB",
+                        TradeName = "Rede AAAB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 1,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 43,
+                        Name = "Parceiro  AAAB",
+                        TradeName = "Parceiro  AAAB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 42,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 44,
+                        Name = "Hotel  AAAB",
+                        TradeName = "Hotel  AAAB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 43,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 45,
+                        Name = "Hotel  AAAB",
+                        TradeName = "Hotel  AAAB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 43,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 1, Name = "Grupo AAAA", ParentClientId = null, Type = "Grupo" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 2, Name = "Rede AAAA", ParentClientId = 1, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 3, Name = "Parceiro  AAAA", ParentClientId = 2, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 4, Name = "Hotel  AAAA1", ParentClientId = 3, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 5, Name = "Hotel  AAAA1", ParentClientId = 3, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 6,
+                        Name = "Grupo BBBB",
+                        TradeName = "Grupo BBBB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Grupo"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 7,
+                        Name = "Rede BBBB",
+                        TradeName = "Rede BBBB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 6,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 8,
+                        Name = "Parceiro  BBBB",
+                        TradeName = "Parceiro  BBBB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 7,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 9,
+                        Name = "Hotel  BBBB1",
+                        TradeName = "Hotel  BBBB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 8,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 10,
+                        Name = "Hotel  BBBB1",
+                        TradeName = "Hotel  BBBB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 8,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 42, Name = "Rede AAAB", ParentClientId = 1, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 43, Name = "Parceiro  AAAB", ParentClientId = 42, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 44, Name = "Hotel  AAAB", ParentClientId = 43, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 45, Name = "Hotel  AAAB", ParentClientId = 43, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 47,
+                        Name = "Parceiro  BBBC",
+                        TradeName = "Parceiro  BBBC",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 6,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 48,
+                        Name = "Hotel  BBBC1",
+                        TradeName = "Hotel  BBBC1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 47,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 49,
+                        Name = "Hotel  BBBC1",
+                        TradeName = "Hotel  BBBC1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 47,
+                        Type = "Hotel"
+                    }
+                );
 
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 11,
+                        Name = "Grupo CCCC",
+                        TradeName = "Grupo CCCC",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Grupo"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 12,
+                        Name = "Rede CCCC",
+                        TradeName = "Rede CCCC",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 11,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 13,
+                        Name = "Parceiro  CCCC",
+                        TradeName = "Parceiro  CCCC",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 12,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 14,
+                        Name = "Hotel  CCCC1",
+                        TradeName = "Hotel  CCCC1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 13,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 15,
+                        Name = "Hotel  CCCC1",
+                        TradeName = "Hotel  CCCC1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 13,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 6, Name = "Grupo BBBB", ParentClientId = null, Type = "Grupo" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 7, Name = "Rede BBBB", ParentClientId = 6, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 8, Name = "Parceiro  BBBB", ParentClientId = 7, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 9, Name = "Hotel  BBBB1", ParentClientId = 8, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 10, Name = "Hotel  BBBB1", ParentClientId = 8, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 50,
+                        Name = "Parceiro  CCCD",
+                        TradeName = "Parceiro  CCCD",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 12,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 51,
+                        Name = "Hotel  CCCD1",
+                        TradeName = "Hotel  CCCD1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 50,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 52,
+                        Name = "Hotel  CCCD1",
+                        TradeName = "Hotel  CCCD1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 50,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 47, Name = "Parceiro  BBBC", ParentClientId = 6, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 48, Name = "Hotel  BBBC1", ParentClientId = 47, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 49, Name = "Hotel  BBBC1", ParentClientId = 47, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 16,
+                        Name = "Grupo DDDD",
+                        TradeName = "Grupo DDDD",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Grupo"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 17,
+                        Name = "Rede DDDD",
+                        TradeName = "Rede DDDD",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 16,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 18,
+                        Name = "Parceiro  DDDD",
+                        TradeName = "Parceiro  DDDD",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 17,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 19,
+                        Name = "Hotel  DDDD1",
+                        TradeName = "Hotel  DDDD1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 18,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 20,
+                        Name = "Hotel  DDDD1",
+                        TradeName = "Hotel  DDDD1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 18,
+                        Type = "Hotel"
+                    }
+                );
 
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 53,
+                        Name = "Hotel  DDDE1",
+                        TradeName = "Hotel  DDDE1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 16,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 54,
+                        Name = "Hotel  DDDE1",
+                        TradeName = "Hotel  DDDE1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 16,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 11, Name = "Grupo CCCC", ParentClientId = null, Type = "Grupo" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 12, Name = "Rede CCCC", ParentClientId = 11, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 13, Name = "Parceiro  CCCC", ParentClientId = 12, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 14, Name = "Hotel  CCCC1", ParentClientId = 13, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 15, Name = "Hotel  CCCC1", ParentClientId = 13, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 21,
+                        Name = "Grupo EEEE",
+                        TradeName = "Grupo EEEE",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Grupo"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 22,
+                        Name = "Rede EEEE",
+                        TradeName = "Rede EEEE",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 21,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 23,
+                        Name = "Parceiro  EEEE",
+                        TradeName = "Parceiro  EEEE",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 22,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 24,
+                        Name = "Hotel  EEEE1",
+                        TradeName = "Hotel  EEEE1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 23,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 25,
+                        Name = "Hotel  EEEE1",
+                        TradeName = "Hotel  EEEE1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 23,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 50, Name = "Parceiro  CCCD", ParentClientId = 12, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 51, Name = "Hotel  CCCD1", ParentClientId = 50, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 52, Name = "Hotel  CCCD1", ParentClientId = 50, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 26,
+                        Name = "Rede AAA",
+                        TradeName = "Rede AAA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 27,
+                        Name = "Parceiro  AAA",
+                        TradeName = "Parceiro  AAA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 26,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 28,
+                        Name = "Hotel  AAA1",
+                        TradeName = "Hotel  AAA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 27,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 29,
+                        Name = "Hotel  AAA1",
+                        TradeName = "Hotel  AAA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 27,
+                        Type = "Hotel"
+                    }
+                );
 
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 30,
+                        Name = "Rede BBB",
+                        TradeName = "Rede BBB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Rede"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 31,
+                        Name = "Parceiro  BBB",
+                        TradeName = "Parceiro  BBB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 30,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 32,
+                        Name = "Hotel  BBB1",
+                        TradeName = "Hotel  BBB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 31,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 33,
+                        Name = "Hotel  BBB1",
+                        TradeName = "Hotel  BBB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 31,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 16, Name = "Grupo DDDD", ParentClientId = null, Type = "Grupo" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 17, Name = "Rede DDDD", ParentClientId = 16, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 18, Name = "Parceiro  DDDD", ParentClientId = 17, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 19, Name = "Hotel  DDDD1", ParentClientId = 18, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 20, Name = "Hotel  DDDD1", ParentClientId = 18, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 34,
+                        Name = "Parceiro  AA",
+                        TradeName = "Parceiro  AA",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 35,
+                        Name = "Hotel  AA1",
+                        TradeName = "Hotel  AA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 34,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 36,
+                        Name = "Hotel  AA1",
+                        TradeName = "Hotel  AA1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 34,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 53, Name = "Hotel  DDDE1", ParentClientId = 16, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 54, Name = "Hotel  DDDE1", ParentClientId = 16, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 37,
+                        Name = "Parceiro  BB",
+                        TradeName = "Parceiro  BB",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Parceiro"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 38,
+                        Name = "Hotel  BB1",
+                        TradeName = "Hotel  BB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 37,
+                        Type = "Hotel"
+                    }
+                );
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 39,
+                        Name = "Hotel  BB1",
+                        TradeName = "Hotel  BB1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = 37,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 21, Name = "Grupo EEEE", ParentClientId = null, Type = "Grupo" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 22, Name = "Rede EEEE", ParentClientId = 21, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 23, Name = "Parceiro  EEEE", ParentClientId = 22, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 24, Name = "Hotel  EEEE1", ParentClientId = 23, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 25, Name = "Hotel  EEEE1", ParentClientId = 23, Type = "Hotel" });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 40,
+                        Name = "Hotel  A1",
+                        TradeName = "Hotel  A1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Hotel"
+                    }
+                );
 
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 26, Name = "Rede AAA", ParentClientId = null, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 27, Name = "Parceiro  AAA", ParentClientId = 26, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 28, Name = "Hotel  AAA1", ParentClientId = 27, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 29, Name = "Hotel  AAA1", ParentClientId = 27, Type = "Hotel" });
-
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 30, Name = "Rede BBB", ParentClientId = null, Type = "Rede" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 31, Name = "Parceiro  BBB", ParentClientId = 30, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 32, Name = "Hotel  BBB1", ParentClientId = 31, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 33, Name = "Hotel  BBB1", ParentClientId = 31, Type = "Hotel" });
-
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 34, Name = "Parceiro  AA", ParentClientId = null, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 35, Name = "Hotel  AA1", ParentClientId = 34, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 36, Name = "Hotel  AA1", ParentClientId = 34, Type = "Hotel" });
-
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 37, Name = "Parceiro  BB", ParentClientId = null, Type = "Parceiro" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 38, Name = "Hotel  BB1", ParentClientId = 37, Type = "Hotel" });
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 39, Name = "Hotel  BB1", ParentClientId = 37, Type = "Hotel" });
-
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 40, Name = "Hotel  A1", ParentClientId = null, Type = "Hotel" });
-
-            modelBuilder.Entity<Client>().HasData(new Client { ClientId = 41, Name = "Hotel  B1", ParentClientId = null, Type = "Hotel" });
-
-
-
-
-
-
-
-
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                CategoryId = concertGuid,
-                Name = "Concerts"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                CategoryId = musicalGuid,
-                Name = "Musicals"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                CategoryId = playGuid,
-                Name = "Plays"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                CategoryId = conferenceGuid,
-                Name = "Conferences"
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{EE272F8B-6096-4CB6-8625-BB4BB2D89E8B}"),
-                Name = "John Egbert Live",
-                Price = 65,
-                Artist = "John Egbert",
-                Date = DateTime.Now.AddMonths(6),
-                Description = "Join John for his farwell tour across 15 continents. John really needs no introduction since he has already mesmerized the world with his banjo.",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/banjo.jpg",
-                CategoryId = concertGuid
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{3448D5A4-0F72-4DD7-BF15-C14A46B26C00}"),
-                Name = "The State of Affairs: Michael Live!",
-                Price = 85,
-                Artist = "Michael Johnson",
-                Date = DateTime.Now.AddMonths(9),
-                Description = "Michael Johnson doesn't need an introduction. His 25 concert across the globe last year were seen by thousands. Can we add you to the list?",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/michael.jpg",
-                CategoryId = concertGuid
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{B419A7CA-3321-4F38-BE8E-4D7B6A529319}"),
-                Name = "Clash of the DJs",
-                Price = 85,
-                Artist = "DJ 'The Mike'",
-                Date = DateTime.Now.AddMonths(4),
-                Description = "DJs from all over the world will compete in this epic battle for eternal fame.",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/dj.jpg",
-                CategoryId = concertGuid
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{62787623-4C52-43FE-B0C9-B7044FB5929B}"),
-                Name = "Spanish guitar hits with Manuel",
-                Price = 25,
-                Artist = "Manuel Santinonisi",
-                Date = DateTime.Now.AddMonths(4),
-                Description = "Get on the hype of Spanish Guitar concerts with Manuel.",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/guitar.jpg",
-                CategoryId = concertGuid
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{1BABD057-E980-4CB3-9CD2-7FDD9E525668}"),
-                Name = "Techorama Belgium",
-                Price = 400,
-                Artist = "Many",
-                Date = DateTime.Now.AddMonths(10),
-                Description = "The best tech conference in the world",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/conf.jpg",
-                CategoryId = conferenceGuid
-            });
-
-            modelBuilder.Entity<Event>().HasData(new Event
-            {
-                EventId = Guid.Parse("{ADC42C09-08C1-4D2C-9F96-2D15BB1AF299}"),
-                Name = "To the Moon and Back",
-                Price = 135,
-                Artist = "Nick Sailor",
-                Date = DateTime.Now.AddMonths(8),
-                Description = "The critics are over the moon and so will you after you've watched this sing and dance extravaganza written by Nick Sailor, the man from 'My dad and sister'.",
-                ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/GloboTicket/musical.jpg",
-                CategoryId = musicalGuid
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{7E94BC5B-71A5-4C8C-BC3B-71BB7976237E}"),
-                OrderTotal = 400,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{A441EB40-9636-4EE6-BE49-A66C5EC1330B}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{86D3A045-B42D-4854-8150-D6A374948B6E}"),
-                OrderTotal = 135,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{AC3CFAF5-34FD-4E4D-BC04-AD1083DDC340}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{771CCA4B-066C-4AC7-B3DF-4D12837FE7E0}"),
-                OrderTotal = 85,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{D97A15FC-0D32-41C6-9DDF-62F0735C4C1C}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{3DCB3EA0-80B1-4781-B5C0-4D85C41E55A6}"),
-                OrderTotal = 245,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{4AD901BE-F447-46DD-BCF7-DBE401AFA203}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{E6A2679C-79A3-4EF1-A478-6F4C91B405B6}"),
-                OrderTotal = 142,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{7AEB2C01-FE8E-4B84-A5BA-330BDF950F5C}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{F5A6A3A0-4227-4973-ABB5-A63FBE725923}"),
-                OrderTotal = 40,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{F5A6A3A0-4227-4973-ABB5-A63FBE725923}")
-            });
-
-            modelBuilder.Entity<Order>().HasData(new Order
-            {
-                Id = Guid.Parse("{BA0EB0EF-B69B-46FD-B8E2-41B4178AE7CB}"),
-                OrderTotal = 116,
-                OrderPaid = true,
-                OrderPlaced = DateTime.Now,
-                UserId = Guid.Parse("{7AEB2C01-FE8E-4B84-A5BA-330BDF950F5C}")
-            });
+            modelBuilder
+                .Entity<Client>()
+                .HasData(
+                    new Client
+                    {
+                        ClientId = 41,
+                        Name = "Hotel  B1",
+                        TradeName = "Hotel  B1",
+                        RegisteredNumber = "000",
+                        LogoURL = "LogoURL",
+                        Language = "BR",
+                        CurrencyType = "REAL",
+                        Origin = "Origem",
+                        StateRegistration = "00000",
+                        TimeZone = "Brasilia",
+                        IsStateRegistrationFree = false,
+                        ParentClientId = null,
+                        Type = "Hotel"
+                    }
+                );
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(
+            CancellationToken cancellationToken = new CancellationToken()
+        )
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
@@ -293,3 +1130,7 @@ namespace Sample.Persistence
         }
     }
 }
+
+
+//dotnet ef database update --verbose --project src/Infrastructure/Sample.Persistence --startup-project src/API/Sample.API  --context SampleDbContext
+//dotnet ef migrations add --verbose --project src/Infrastructure/Sample.Persistence --startup-project src/API/Sample.API  --context SampleDbContext -v Create_

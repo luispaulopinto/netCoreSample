@@ -64,5 +64,16 @@ namespace Sample.Persistence.Repositories
 
             return await query.ToListAsync();
         }
+
+        public async Task<List<Client>> GetClientsByType(string Type)
+        {
+            var query = _dbContext
+                .Clients.Where(c => c.Type == Type)
+                // .Clients.Where(c => c.ParentClient == null)
+                // .Select(GetClientProjection(7, 0))
+                .OrderBy(x => x.ClientId);
+
+            return await query.ToListAsync();
+        }
     }
 }

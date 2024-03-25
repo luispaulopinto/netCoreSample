@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
 using Sample.Application.Features.Categories.Commands.CreateCateogry;
 using Sample.Application.Features.Categories.Queries.GetCategoriesList;
 using Sample.Application.Features.Categories.Queries.GetCategoriesListWithEvents;
@@ -36,7 +37,15 @@ namespace Sample.Application.Profiles
 
             CreateMap<Order, OrdersForMonthDto>();
 
-            CreateMap<Client, ClientListWithSubClientsVm>().ReverseMap();
+            CreateMap<Client, ClientListWithSubClientsVm>()
+                .ForMember(
+                    dest => dest.ChildrenClient,
+                    opt =>
+                    {
+                        opt.Condition(src => src.ChildrenClient is not null);
+                    }
+                )
+                .ReverseMap();
             CreateMap<Client, ClientDetailVm>()
                 .ForMember(dest => dest.ParentId, input => input.MapFrom(i => i.ParentClientId))
                 .ReverseMap();

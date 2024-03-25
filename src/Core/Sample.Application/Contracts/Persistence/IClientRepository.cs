@@ -8,6 +8,8 @@ namespace Sample.Application.Contracts.Persistence
 
         Task<List<Client>> GetClientsListWithSubClients();
 
+        Task<List<Client>> GetClientsByType(string Type);
+
         Task<Client> GetClient(int ClientId, bool includeChildren);
     }
 }

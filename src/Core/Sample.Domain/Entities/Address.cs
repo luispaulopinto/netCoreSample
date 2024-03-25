@@ -14,7 +14,7 @@ namespace Sample.Domain.Entities
 
         public string District { get; set; }
 
-        public string ZipCode { get; set; }
+        public string PostalCode { get; set; }
 
         public string Street { get; set; }
 

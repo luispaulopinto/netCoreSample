@@ -36,6 +36,8 @@ namespace Sample.Domain.Entities
 
         public Client ParentClient { get; set; }
 
+        public Address Address { get; set; }
+
         public ICollection<Client>? ChildrenClient { get; set; }
     }
 }
