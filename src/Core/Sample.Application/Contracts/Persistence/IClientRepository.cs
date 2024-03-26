@@ -6,6 +6,8 @@ namespace Sample.Application.Contracts.Persistence
     {
         Task<Client> GetByIdAsync(int id);
 
+        Task<List<Client>> GetClients();
+
         Task<List<Client>> GetClientsListWithSubClients();
 
         Task<List<Client>> GetClientsByType(string Type);

@@ -28,6 +28,8 @@ namespace Sample.Persistence
 
         public DbSet<Client> Clients { get; set; }
 
+        public DbSet<Address> Address { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SampleDbContext).Assembly);

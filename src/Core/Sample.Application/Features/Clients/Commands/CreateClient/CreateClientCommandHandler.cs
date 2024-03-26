@@ -31,6 +31,7 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
             {
                 createClientCommandResponse.Success = false;
                 createClientCommandResponse.ValidationErrors = new List<string>();
+
                 foreach (var error in validationResult.Errors)
                 {
                     createClientCommandResponse.ValidationErrors.Add(error.ErrorMessage);
@@ -54,6 +55,7 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
                 };
 
                 client = await _clientRepository.AddAsync(client);
+
                 createClientCommandResponse.Client = _mapper.Map<CreateClientDto>(client);
             }
 

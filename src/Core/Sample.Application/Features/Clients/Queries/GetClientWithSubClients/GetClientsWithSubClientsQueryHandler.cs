@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using AutoMapper;
 using MediatR;
 using Sample.Application.Contracts.Persistence;
@@ -26,12 +25,7 @@ namespace Sample.Application.Features.Clients.Queries.GetClientWithSubClients
             CancellationToken cancellationToken
         )
         {
-            List<Client> list = [];
-
-            if (string.IsNullOrEmpty(request.Type))
-                list = await _clientRepository.GetClientsListWithSubClients();
-            else
-                list = await _clientRepository.GetClientsByType(request.Type);
+            List<Client> list = await _clientRepository.GetClientsListWithSubClients();
 
             return _mapper.Map<List<ClientListWithSubClientsVm>>(list);
         }

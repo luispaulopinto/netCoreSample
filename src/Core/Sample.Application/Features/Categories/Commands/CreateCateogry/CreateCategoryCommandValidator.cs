@@ -7,9 +7,11 @@ namespace Sample.Application.Features.Categories.Commands.CreateCateogry
         public CreateCategoryCommandValidator()
         {
             RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotEmpty()
+                .WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 10 characters.");
+                .MaximumLength(50)
+                .WithMessage("{PropertyName} must not exceed 10 characters.");
         }
     }
 }

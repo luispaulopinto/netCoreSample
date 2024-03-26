@@ -1,9 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sample.Application.Features.Addresses.Commands.CreateAddress;
 using Sample.Application.Features.Clients.Commands.CreateClient;
 using Sample.Application.Features.Clients.Commands.DeleteClient;
 using Sample.Application.Features.Clients.Commands.UpdateClient;
 using Sample.Application.Features.Clients.Queries.GetClientDetail;
+using Sample.Application.Features.Clients.Queries.GetClients;
 using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 
 namespace Sample.Api.Controllers
@@ -19,15 +21,21 @@ namespace Sample.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetAllClientsWithSubClients")]
+        [HttpGet(Name = "GetAllClients")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<ClientListWithSubClientsVm>>> GetAllClients(
-            string? type
-        )
+        public async Task<ActionResult<List<ClientsListVm>>> GetAllClients(string? type)
         {
-            var dtos = await _mediator.Send(
-                new GetClientsWithSubClientsQuery() { Type = type ?? string.Empty }
-            );
+            var dtos = await _mediator.Send(new GetClientsQuery() { Type = type ?? string.Empty });
+            return Ok(dtos);
+        }
+
+        [HttpGet("withsubclients", Name = "GetAllClientsWithSubClients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<
+            ActionResult<List<ClientListWithSubClientsVm>>
+        > GetAllClientsWithSubClients()
+        {
+            var dtos = await _mediator.Send(new GetClientsWithSubClientsQuery() { });
             return Ok(dtos);
         }
 
@@ -50,10 +58,15 @@ namespace Sample.Api.Controllers
         [HttpPost(Name = "AddClient")]
         public async Task<ActionResult<CreateClientCommandResponse>> Create(
             [FromBody] CreateClientCommand createClientCommand
+        // [FromBody] CreateAddressCommand createAddressCommand
         )
         {
-            var response = await _mediator.Send(createClientCommand);
-            return Ok(response);
+            var clientResponse = await _mediator.Send(createClientCommand);
+
+            // createAddressCommand.ClientId = clientResponse.Client.ClientId;
+            // var addressResponse = await _mediator.Send(createAddressCommand);
+
+            return Ok(clientResponse);
         }
 
         [HttpPut(Name = "UpdateClient")]

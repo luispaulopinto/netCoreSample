@@ -1,11 +1,13 @@
 ﻿using System.Data;
 using AutoMapper;
+using Sample.Application.Features.Addresses.Commands.CreateAddress;
 using Sample.Application.Features.Categories.Commands.CreateCateogry;
 using Sample.Application.Features.Categories.Queries.GetCategoriesList;
 using Sample.Application.Features.Categories.Queries.GetCategoriesListWithEvents;
 using Sample.Application.Features.Clients.Commands.CreateClient;
 using Sample.Application.Features.Clients.Commands.UpdateClient;
 using Sample.Application.Features.Clients.Queries.GetClientDetail;
+using Sample.Application.Features.Clients.Queries.GetClients;
 using Sample.Application.Features.Clients.Queries.GetClientWithSubClients;
 using Sample.Application.Features.Events.Commands.CreateEvent;
 using Sample.Application.Features.Events.Commands.UpdateEvent;
@@ -37,6 +39,7 @@ namespace Sample.Application.Profiles
 
             CreateMap<Order, OrdersForMonthDto>();
 
+            CreateMap<Client, ClientsListVm>();
             CreateMap<Client, ClientListWithSubClientsVm>()
                 .ForMember(
                     dest => dest.ChildrenClient,
@@ -46,6 +49,7 @@ namespace Sample.Application.Profiles
                     }
                 )
                 .ReverseMap();
+
             CreateMap<Client, ClientDetailVm>()
                 .ForMember(dest => dest.ParentId, input => input.MapFrom(i => i.ParentClientId))
                 .ReverseMap();
@@ -53,6 +57,9 @@ namespace Sample.Application.Profiles
             CreateMap<Client, CreateClientDto>().ReverseMap();
             CreateMap<Client, CreateClientCommand>().ReverseMap();
             CreateMap<Client, UpdateClientCommand>().ReverseMap();
+
+            CreateMap<Address, CreateAddressCommand>().ReverseMap();
+            CreateMap<Address, CreateAddressDto>().ReverseMap();
         }
     }
 }

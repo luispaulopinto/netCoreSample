@@ -1,22 +1,29 @@
 ﻿using AutoMapper;
+using MediatR;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
-using MediatR;
 
 namespace Sample.Application.Features.Categories.Commands.CreateCateogry
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, CreateCategoryCommandResponse>
+    public class CreateCategoryCommandHandler
+        : IRequestHandler<CreateCategoryCommand, CreateCategoryCommandResponse>
     {
         private readonly IAsyncRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CreateCategoryCommandHandler(IMapper mapper, IAsyncRepository<Category> categoryRepository)
+        public CreateCategoryCommandHandler(
+            IMapper mapper,
+            IAsyncRepository<Category> categoryRepository
+        )
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCategoryCommandResponse> Handle(
+            CreateCategoryCommand request,
+            CancellationToken cancellationToken
+        )
         {
             var createCategoryCommandResponse = new CreateCategoryCommandResponse();
 

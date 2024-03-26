@@ -55,6 +55,13 @@ namespace Sample.Persistence.Repositories
             return await query;
         }
 
+        public async Task<List<Client>> GetClients()
+        {
+            var query = _dbContext.Clients.OrderBy(x => x.ClientId);
+
+            return await query.ToListAsync();
+        }
+
         public async Task<List<Client>> GetClientsListWithSubClients()
         {
             var query = _dbContext
@@ -67,11 +74,14 @@ namespace Sample.Persistence.Repositories
 
         public async Task<List<Client>> GetClientsByType(string Type)
         {
-            var query = _dbContext
-                .Clients.Where(c => c.Type == Type)
-                // .Clients.Where(c => c.ParentClient == null)
-                // .Select(GetClientProjection(7, 0))
-                .OrderBy(x => x.ClientId);
+            var query = _dbContext.Clients.Where(c => c.Type == Type).OrderBy(x => x.ClientId);
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<List<IGrouping<string, Client>>> GetClientsGroupByType()
+        {
+            var query = _dbContext.Clients.GroupBy(c => c.Type).OrderBy(x => x);
 
             return await query.ToListAsync();
         }
