@@ -19,21 +19,32 @@ namespace Sample.Persistence.Migrations
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastModifiedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Clients",
                 columns: table => new
                 {
-                    ClientId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ClientId = table
+                        .Column<int>(type: "integer", nullable: false)
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn
+                        ),
                     Name = table.Column<string>(type: "text", nullable: false),
                     TradeName = table.Column<string>(type: "text", nullable: false),
                     RegisteredNumber = table.Column<string>(type: "text", nullable: false),
@@ -47,19 +58,26 @@ namespace Sample.Persistence.Migrations
                     Origin = table.Column<string>(type: "text", nullable: false),
                     ParentClientId = table.Column<int>(type: "integer", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastModifiedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.ClientId);
-                    table.ForeignKey(
-                        name: "FK_Clients_Clients_ParentClientId",
-                        column: x => x.ParentClientId,
-                        principalTable: "Clients",
-                        principalColumn: "ClientId");
-                });
+                    // table.ForeignKey(
+                    //     name: "FK_Clients_Clients_ParentClientId",
+                    //     column: x => x.ParentClientId,
+                    //     principalTable: "Clients",
+                    //     principalColumn: "ClientId");
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Orders",
@@ -68,34 +86,57 @@ namespace Sample.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     OrderTotal = table.Column<int>(type: "integer", nullable: false),
-                    OrderPlaced = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    OrderPlaced = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     OrderPaid = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastModifiedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
                     EventId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(
+                        type: "character varying(50)",
+                        maxLength: 50,
+                        nullable: false
+                    ),
                     Price = table.Column<int>(type: "integer", nullable: false),
                     Artist = table.Column<string>(type: "text", nullable: true),
-                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Date = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastModifiedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
@@ -105,15 +146,21 @@ namespace Sample.Persistence.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Address",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn
+                        ),
                     Country = table.Column<string>(type: "text", nullable: false),
                     State = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
@@ -124,9 +171,15 @@ namespace Sample.Persistence.Migrations
                     Complement = table.Column<string>(type: "text", nullable: false),
                     ClientId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: false
+                    ),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastModifiedDate = table.Column<DateTime>(
+                        type: "timestamp without time zone",
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
@@ -136,43 +189,43 @@ namespace Sample.Persistence.Migrations
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "ClientId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Address_ClientId",
                 table: "Address",
                 column: "ClientId",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_ParentClientId",
                 table: "Clients",
-                column: "ParentClientId");
+                column: "ParentClientId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Events_CategoryId",
                 table: "Events",
-                column: "CategoryId");
+                column: "CategoryId"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Address");
+            migrationBuilder.DropTable(name: "Address");
 
-            migrationBuilder.DropTable(
-                name: "Events");
+            migrationBuilder.DropTable(name: "Events");
 
-            migrationBuilder.DropTable(
-                name: "Orders");
+            migrationBuilder.DropTable(name: "Orders");
 
-            migrationBuilder.DropTable(
-                name: "Clients");
+            migrationBuilder.DropTable(name: "Clients");
 
-            migrationBuilder.DropTable(
-                name: "Categories");
+            migrationBuilder.DropTable(name: "Categories");
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
@@ -9,6 +10,220 @@ namespace Sample.Persistence.Repositories
     {
         public ClientRepository(SampleDbContext dbContext)
             : base(dbContext) { }
+
+        public async Task BulkInsert()
+        {
+            SeedsBulkUtils factory = new SeedsBulkUtils();
+
+            int clientId = 99;
+
+            var grupoSeeds = Enumerable
+                .Range(0, 500) //500
+                .Select(s =>
+                {
+                    clientId++;
+                    return new Client
+                    {
+                        ClientId = clientId,
+                        ParentClientId = null,
+                        Name = $"Grupo {s}",
+                        CurrencyType = "BR",
+                        IsStateRegistrationFree = false,
+                        Language = "pt-BR",
+                        LogoURL = "logo_URL",
+                        Origin = "Origem",
+                        RegisteredNumber = "000000",
+                        StateRegistration = "000000",
+                        TimeZone = "Fuso",
+                        TradeName = $"Nome {s}",
+                        Type = "Grupo",
+                        Address = new Address()
+                        {
+                            Street = $"Street {s}",
+                            StreetNumber = "100",
+                            City = "City",
+                            State = "State",
+                            Country = "Country",
+                            District = "District",
+                            PostalCode = "00000-000",
+                            Complement = "Complement"
+                        },
+                        ChildrenClient =
+                        [
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Grupo/Rede",
+                                "Rede",
+                                ref clientId,
+                                clientId
+                            ),
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Grupo/Parceiro",
+                                "Parceiro",
+                                ref clientId,
+                                clientId
+                            ),
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Grupo/Hotel",
+                                "Hotel",
+                                ref clientId,
+                                clientId
+                            ),
+                        ]
+                    };
+                });
+
+            var redeSeeds = Enumerable
+                .Range(0, 750) //750
+                .Select(s =>
+                {
+                    clientId++;
+                    return new Client
+                    {
+                        ClientId = clientId,
+                        ParentClientId = null,
+                        Name = $"Rede {s}",
+                        CurrencyType = "BR",
+                        IsStateRegistrationFree = false,
+                        Language = "pt-BR",
+                        LogoURL = "logo_URL",
+                        Origin = "Origem",
+                        RegisteredNumber = "000000",
+                        StateRegistration = "000000",
+                        TimeZone = "Fuso",
+                        TradeName = $"Nome {s}",
+                        Type = "Rede",
+                        Address = new Address()
+                        {
+                            Street = $"Street {s}",
+                            StreetNumber = "100",
+                            City = "City",
+                            State = "State",
+                            Country = "Country",
+                            District = "District",
+                            PostalCode = "00000-000",
+                            Complement = "Complement"
+                        },
+                        ChildrenClient =
+                        [
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Rede/Parceiro",
+                                "Parceiro",
+                                ref clientId,
+                                clientId
+                            ),
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Rede/Hotel",
+                                "Hotel",
+                                ref clientId,
+                                clientId
+                            ),
+                        ]
+                    };
+                });
+
+            var parceiroSeeds = Enumerable
+                .Range(0, 1000) //1000
+                .Select(s =>
+                {
+                    clientId++;
+                    return new Client
+                    {
+                        ClientId = clientId,
+                        ParentClientId = null,
+                        Name = $"Parceiro {s}",
+                        CurrencyType = "BR",
+                        IsStateRegistrationFree = false,
+                        Language = "pt-BR",
+                        LogoURL = "logo_URL",
+                        Origin = "Origem",
+                        RegisteredNumber = "000000",
+                        StateRegistration = "000000",
+                        TimeZone = "Fuso",
+                        TradeName = $"Nome {s}",
+                        Type = "Parceiro",
+                        Address = new Address()
+                        {
+                            Street = $"Street {s}",
+                            StreetNumber = "100",
+                            City = "City",
+                            State = "State",
+                            Country = "Country",
+                            District = "District",
+                            PostalCode = "00000-000",
+                            Complement = "Complement"
+                        },
+                        ChildrenClient =
+                        [
+                            .. factory.create5ChildrenClients(
+                                s,
+                                "Parceiro/Hotel",
+                                "Hotel",
+                                ref clientId,
+                                clientId
+                            ),
+                        ]
+                    };
+                });
+
+            var hotelSeeds = Enumerable
+                .Range(0, 10000) //10000
+                .Select(s =>
+                {
+                    clientId++;
+                    return new Client
+                    {
+                        ClientId = clientId,
+                        ParentClientId = null,
+                        Name = $"Hotel {s}",
+                        CurrencyType = "BR",
+                        IsStateRegistrationFree = false,
+                        Language = "pt-BR",
+                        LogoURL = "logo_URL",
+                        Origin = "Origem",
+                        RegisteredNumber = "000000",
+                        StateRegistration = "000000",
+                        TimeZone = "Fuso",
+                        TradeName = $"Nome {s}",
+                        Type = "Hotel",
+                        Address = new Address()
+                        {
+                            Street = $"Street {s}",
+                            StreetNumber = "100",
+                            City = "City",
+                            State = "State",
+                            Country = "Country",
+                            District = "District",
+                            PostalCode = "00000-000",
+                            Complement = "Complement"
+                        },
+                        ChildrenClient = []
+                    };
+                });
+
+            var seeds = grupoSeeds
+                .Concat(redeSeeds)
+                .Concat(parceiroSeeds)
+                .Concat(hotelSeeds)
+                .ToList();
+
+            await _dbContext.BulkInsertAsync(
+                seeds,
+                options =>
+                {
+                    options.SqlBulkCopyOptions = Microsoft
+                        .Data
+                        .SqlClient
+                        .SqlBulkCopyOptions
+                        .KeepIdentity;
+                    options.IncludeGraph = true;
+                }
+            );
+        }
 
         public async Task<Client> GetByIdAsync(int id)
         {
@@ -81,7 +296,7 @@ namespace Sample.Persistence.Repositories
 
         public async Task<List<IGrouping<string, Client>>> GetClientsGroupByType()
         {
-            var query = _dbContext.Clients.GroupBy(c => c.Type).OrderBy(x => x);
+            var query = _dbContext.Clients.GroupBy(c => c.Type).OrderBy(o => o.Key);
 
             return await query.ToListAsync();
         }

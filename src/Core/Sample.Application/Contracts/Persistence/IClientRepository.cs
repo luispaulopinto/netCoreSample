@@ -4,6 +4,8 @@ namespace Sample.Application.Contracts.Persistence
 {
     public interface IClientRepository : IAsyncRepository<Client>
     {
+        Task BulkInsert();
+
         Task<Client> GetByIdAsync(int id);
 
         Task<List<Client>> GetClients();

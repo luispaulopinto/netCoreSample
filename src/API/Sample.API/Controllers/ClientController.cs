@@ -69,6 +69,17 @@ namespace Sample.Api.Controllers
             return Ok(clientResponse);
         }
 
+        [HttpPost("BulkInsert 50k", Name = "BulkInsert")]
+        public async Task<ActionResult> Create(
+            [FromBody] CreateSeedsCommand createSeedsCommand
+        // [FromBody] CreateAddressCommand createAddressCommand
+        )
+        {
+            await _mediator.Send(createSeedsCommand);
+
+            return NoContent();
+        }
+
         [HttpPut(Name = "UpdateClient")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

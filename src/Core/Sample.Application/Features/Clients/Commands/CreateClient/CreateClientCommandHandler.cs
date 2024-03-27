@@ -24,6 +24,10 @@ namespace Sample.Application.Features.Clients.Commands.CreateClient
         {
             var createClientCommandResponse = new CreateClientCommandResponse();
 
+            // await _clientRepository.BulkInsert();
+
+            createClientCommandResponse.Client = _mapper.Map<CreateClientDto>(new Client());
+
             var validator = new CreateClientCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
 
