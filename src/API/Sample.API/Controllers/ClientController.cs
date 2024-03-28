@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sample.API;
 using Sample.Application.Features.Addresses.Commands.CreateAddress;
 using Sample.Application.Features.Clients.Commands.CreateClient;
 using Sample.Application.Features.Clients.Commands.DeleteClient;
@@ -26,7 +27,7 @@ namespace Sample.Api.Controllers
         public async Task<ActionResult<List<ClientsListVm>>> GetAllClients(string? type)
         {
             var dtos = await _mediator.Send(new GetClientsQuery() { Type = type ?? string.Empty });
-            return Ok(dtos);
+            return Ok(new PagedResponse<List<ClientsListVm>>(dtos, 1, 20));
         }
 
         [HttpGet("withsubclients", Name = "GetAllClientsWithSubClients")]

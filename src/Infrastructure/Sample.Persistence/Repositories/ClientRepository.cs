@@ -1,6 +1,8 @@
+using System.Diagnostics;
 using System.Linq.Expressions;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.Replication;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
 
@@ -261,18 +263,77 @@ namespace Sample.Persistence.Repositories
             if (!includeChildren)
                 return await _dbContext.Clients.FirstOrDefaultAsync(c => c.ClientId == ClientId);
 
-            var query = _dbContext
+            var projectionTimer = new Stopwatch();
+            projectionTimer.Start();
+
+            var query = await _dbContext
                 .Clients.Where(c => c.ClientId == ClientId)
-                .Select(GetClientProjection(7, 0))
+                .Select(GetClientProjection(4, 0))
                 .OrderBy(x => x.ClientId)
                 .FirstAsync();
 
-            return await query;
+            projectionTimer.Stop();
+
+            TimeSpan projectionTimeTaken = projectionTimer.Elapsed;
+
+            var recursiveTimer = new Stopwatch();
+            recursiveTimer.Start();
+
+            var recursiveQuery = _dbContext
+                .Clients.FromSql(
+                    $@"
+                        WITH RECURSIVE recursive_cte
+                        AS (
+                            -- anchor member
+                            SELECT * FROM ""Clients"" 
+                                WHERE ""ClientId"" = {ClientId}
+
+                            UNION ALL
+
+                            -- recursive term
+                            SELECT c.* FROM ""Clients"" c 
+                                INNER JOIN recursive_cte cte 
+                                    ON 
+                                        cte.""ClientId"" = c.""ParentClientId""
+                        ) 
+                        
+                        SELECT * FROM recursive_cte
+                    "
+                )
+                .ToListAsync();
+
+            var test = await recursiveQuery;
+            var lookup = test.ToLookup(x => x.ParentClientId);
+
+            foreach (var c in test)
+            {
+                if (lookup.Contains(c.ClientId))
+                    c.ChildrenClient.ToList()
+                        .AddRange(lookup.Where(s => s.Key == c.ClientId).SelectMany(x => x));
+            }
+
+            var result = test.Where(c => c.ParentClientId == null).FirstOrDefault();
+            recursiveTimer.Stop();
+
+            TimeSpan recursiveTimeTaken = recursiveTimer.Elapsed;
+
+            Debug.WriteLine(
+                "Projection Time taken: " + projectionTimeTaken.ToString(@"m\:ss\.fff")
+            );
+            Debug.WriteLine("Recursive Time taken: " + recursiveTimeTaken.ToString(@"m\:ss\.fff"));
+            var percentFaster =
+                (projectionTimeTaken - recursiveTimeTaken) / projectionTimeTaken * 100;
+
+            Debug.WriteLine(
+                "Recursive faster than Projection " + Math.Truncate(percentFaster) + "%"
+            );
+
+            return result;
         }
 
         public async Task<List<Client>> GetClients()
         {
-            var query = _dbContext.Clients.OrderBy(x => x.ClientId);
+            var query = _dbContext.Clients.OrderBy(x => x.ClientId).Take(20);
 
             return await query.ToListAsync();
         }
@@ -281,7 +342,7 @@ namespace Sample.Persistence.Repositories
         {
             var query = _dbContext
                 .Clients.Where(c => c.ParentClient == null)
-                .Select(GetClientProjection(7, 0))
+                .Select(GetClientProjection(4, 0))
                 .OrderBy(x => x.ClientId);
 
             return await query.ToListAsync();
@@ -289,7 +350,10 @@ namespace Sample.Persistence.Repositories
 
         public async Task<List<Client>> GetClientsByType(string Type)
         {
-            var query = _dbContext.Clients.Where(c => c.Type == Type).OrderBy(x => x.ClientId);
+            var query = _dbContext
+                .Clients.Where(c => c.Type == Type)
+                .OrderBy(x => x.ClientId)
+                .Take(20);
 
             return await query.ToListAsync();
         }

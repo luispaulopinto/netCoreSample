@@ -13,8 +13,17 @@ namespace Sample.Persistence
             IConfiguration configuration
         )
         {
+            bool isDebugMode = false;
+#if (DEBUG)
+            isDebugMode = true;
+#endif
+
             services.AddDbContext<SampleDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("SampleConnectionString"))
+                options
+                    .UseNpgsql(configuration.GetConnectionString("SampleConnectionString"))
+                    .LogTo(s => System.Diagnostics.Debug.WriteLine(s))
+                    .EnableDetailedErrors(isDebugMode)
+                    .EnableSensitiveDataLogging(isDebugMode)
             );
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
