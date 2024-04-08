@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sample.Persistence;
@@ -11,9 +12,11 @@ using Sample.Persistence;
 namespace Sample.Persistence.Migrations
 {
     [DbContext(typeof(SampleDbContext))]
-    partial class SampleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408154825_AddDepartmentAndContactTables")]
+    partial class AddDepartmentAndContactTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1125,10 +1128,6 @@ namespace Sample.Persistence.Migrations
 
                     b.HasKey("ContactId");
 
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Contact");
                 });
 
@@ -1201,72 +1200,6 @@ namespace Sample.Persistence.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.InvoicingAddress", b =>
-                {
-                    b.Property<int>("InvoicingAddressId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("InvoicingAddressId"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Complement")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("PostlCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Street1")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Street2")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("integer");
-
-                    b.HasKey("InvoicingAddressId");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
-                    b.ToTable("InvoicingAddress");
-                });
-
             modelBuilder.Entity("Sample.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1322,21 +1255,6 @@ namespace Sample.Persistence.Migrations
                     b.Navigation("ParentClient");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Contact", b =>
-                {
-                    b.HasOne("Sample.Domain.Entities.Client", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sample.Domain.Entities.Department", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Sample.Domain.Entities.Event", b =>
                 {
                     b.HasOne("Sample.Domain.Entities.Category", "Category")
@@ -1346,17 +1264,6 @@ namespace Sample.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Sample.Domain.Entities.InvoicingAddress", b =>
-                {
-                    b.HasOne("Sample.Domain.Entities.Client", "Client")
-                        .WithOne("InvoicingAddres")
-                        .HasForeignKey("Sample.Domain.Entities.InvoicingAddress", "ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Category", b =>
@@ -1370,16 +1277,6 @@ namespace Sample.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("ChildrenClient");
-
-                    b.Navigation("Contacts");
-
-                    b.Navigation("InvoicingAddres")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sample.Domain.Entities.Department", b =>
-                {
-                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,6 +21,7 @@ namespace Sample.Persistence
             services.AddDbContext<SampleDbContext>(options =>
                 options
                     .UseNpgsql(configuration.GetConnectionString("SampleConnectionString"))
+                    // .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                     .LogTo(s => System.Diagnostics.Debug.WriteLine(s))
                     .EnableDetailedErrors(isDebugMode)
                     .EnableSensitiveDataLogging(isDebugMode)

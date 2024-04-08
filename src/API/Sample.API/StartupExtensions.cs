@@ -97,7 +97,7 @@ namespace Sample.Api
                 var context = scope.ServiceProvider.GetService<SampleDbContext>();
                 if (context != null)
                 {
-                    await context.Database.EnsureDeletedAsync();
+                    // await context.Database.EnsureDeletedAsync();
                     await context.Database.MigrateAsync();
                 }
             }

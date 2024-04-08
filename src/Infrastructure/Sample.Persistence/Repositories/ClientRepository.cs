@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Npgsql.Replication;
 using Sample.Application.Contracts.Persistence;
 using Sample.Domain.Entities;
@@ -20,7 +21,8 @@ namespace Sample.Persistence.Repositories
             int clientId = 99;
 
             var grupoSeeds = Enumerable
-                .Range(0, 500) //500
+                //.Range(0, 500) // 50k option
+                .Range(0, 10000) // 1M option
                 .Select(s =>
                 {
                     clientId++;
@@ -78,7 +80,8 @@ namespace Sample.Persistence.Repositories
                 });
 
             var redeSeeds = Enumerable
-                .Range(0, 750) //750
+                //.Range(0, 750) // 50k option
+                .Range(0, 15000) // 1M option
                 .Select(s =>
                 {
                     clientId++;
@@ -129,7 +132,8 @@ namespace Sample.Persistence.Repositories
                 });
 
             var parceiroSeeds = Enumerable
-                .Range(0, 1000) //1000
+                // .Range(0, 1000) // 50k option
+                .Range(0, 20000) // 1M option
                 .Select(s =>
                 {
                     clientId++;
@@ -173,7 +177,8 @@ namespace Sample.Persistence.Repositories
                 });
 
             var hotelSeeds = Enumerable
-                .Range(0, 10000) //10000
+                // .Range(0, 10000) // 50k option
+                .Range(0, 200000) // 1M option
                 .Select(s =>
                 {
                     clientId++;
@@ -212,6 +217,8 @@ namespace Sample.Persistence.Repositories
                 .Concat(parceiroSeeds)
                 .Concat(hotelSeeds)
                 .ToList();
+
+            // _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
             await _dbContext.BulkInsertAsync(
                 seeds,
@@ -277,9 +284,11 @@ namespace Sample.Persistence.Repositories
             TimeSpan projectionTimeTaken = projectionTimer.Elapsed;
 
             var recursiveTimer = new Stopwatch();
+            var recursivewiThObjectTimer = new Stopwatch();
             recursiveTimer.Start();
+            recursivewiThObjectTimer.Start();
 
-            var recursiveQuery = _dbContext
+            var recursiveQuery = await _dbContext
                 .Clients.FromSql(
                     $@"
                         WITH RECURSIVE recursive_cte
@@ -302,25 +311,32 @@ namespace Sample.Persistence.Repositories
                 )
                 .ToListAsync();
 
-            var test = await recursiveQuery;
-            var lookup = test.ToLookup(x => x.ParentClientId);
+            recursiveTimer.Stop();
 
-            foreach (var c in test)
+            var lookup = recursiveQuery.ToLookup(x => x.ParentClientId);
+
+            foreach (var c in recursiveQuery)
             {
                 if (lookup.Contains(c.ClientId))
                     c.ChildrenClient.ToList()
                         .AddRange(lookup.Where(s => s.Key == c.ClientId).SelectMany(x => x));
             }
 
-            var result = test.Where(c => c.ParentClientId == null).FirstOrDefault();
-            recursiveTimer.Stop();
+            // var result = recursiveQuery.Where(c => c.ParentClientId == null).FirstOrDefault();
+            var result = recursiveQuery.Where(c => c.ClientId == ClientId).FirstOrDefault();
+            recursivewiThObjectTimer.Stop();
 
             TimeSpan recursiveTimeTaken = recursiveTimer.Elapsed;
+            TimeSpan recursiveWithObjectTimeTaken = recursivewiThObjectTimer.Elapsed;
 
             Debug.WriteLine(
                 "Projection Time taken: " + projectionTimeTaken.ToString(@"m\:ss\.fff")
             );
             Debug.WriteLine("Recursive Time taken: " + recursiveTimeTaken.ToString(@"m\:ss\.fff"));
+            Debug.WriteLine(
+                "Recursive WITH Object Constructor Time taken: "
+                    + recursiveWithObjectTimeTaken.ToString(@"m\:ss\.fff")
+            );
             var percentFaster =
                 (projectionTimeTaken - recursiveTimeTaken) / projectionTimeTaken * 100;
 

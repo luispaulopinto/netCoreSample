@@ -38,6 +38,10 @@ namespace Sample.Domain.Entities
 
         public Address Address { get; set; }
 
+        public InvoicingAddress InvoicingAddres { get; set; }
+
+        public List<Contact>? Contacts { get; set; }
+
         public ICollection<Client>? ChildrenClient { get; set; }
     }
 }
