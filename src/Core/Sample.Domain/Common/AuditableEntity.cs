@@ -1,6 +1,8 @@
-﻿namespace Sample.Domain.Common
+﻿using Sample.Domain.Interfaces;
+
+namespace Sample.Domain.Common
 {
-    public class AuditableEntity
+    public abstract class AuditableEntity<T> : BaseEntity<T>, IAuditableEntity
     {
         public string? CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

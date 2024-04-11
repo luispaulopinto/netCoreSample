@@ -1,10 +1,11 @@
 using Sample.Domain.Common;
+using Sample.Domain.Interfaces;
 
 namespace Sample.Domain.Entities
 {
-    public class Client : AuditableEntity
+    public class Client : AuditableEntity<int>, IAggregateRoot
     {
-        public int ClientId { get; set; }
+        // public int Id { get; set; }
 
         // Razão Social / Company
         public string Name { get; set; }
@@ -32,16 +33,23 @@ namespace Sample.Domain.Entities
 
         public string Origin { get; set; }
 
+        // public int ClientId { get; set; }
+        // public int? ParentClientId { get; set; }
+        // public Client ParentClient { get; set; }
+
+        public Address Address { get; set; }
+
+        public InvoicingInfo InvoicingInfo { get; set; }
+
+        public InvoicingAddress InvoicingAddress { get; set; }
+
+        public List<Contact>? Contacts { get; set; }
+
+        // public ICollection<Client>? ParentChain { get; set; }
         public int? ParentClientId { get; set; }
 
         public Client ParentClient { get; set; }
 
-        public Address Address { get; set; }
-
-        public InvoicingAddress InvoicingAddres { get; set; }
-
-        public List<Contact>? Contacts { get; set; }
-
-        public ICollection<Client>? ChildrenClient { get; set; }
+        public ICollection<Client>? ChildrenChain { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Sample.Application.Features.Clients.Queries.GetClientDetail
 {
     public class ClientDetailVm
     {
-        public int ClientId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public int ParentId { get; set; }

@@ -1,14 +1,15 @@
-﻿using Sample.Application.Contracts.Persistence;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Sample.Application.Contracts.Persistence;
 
 namespace Sample.Persistence.Repositories
 {
-    public class BaseRepository<T> : IAsyncRepository<T> where T : class
+    public class BaseRepository<T> : IAsyncRepository<T>
+        where T : class
     {
         protected readonly SampleDbContext _dbContext;
 

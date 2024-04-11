@@ -18,17 +18,21 @@ namespace Sample.Persistence.Repositories
         {
             SeedsBulkUtils factory = new SeedsBulkUtils();
 
-            int clientId = 99;
+            int clientId = 0;
 
             var grupoSeeds = Enumerable
+                .Range(0, 1) // 50k option
+                // .Range(0, 10000) // 1M option
+
                 //.Range(0, 500) // 50k option
-                .Range(0, 10000) // 1M option
+                // .Range(0, 50000) // 1M option
+                // .Range(0, 10) // 1M option
                 .Select(s =>
                 {
                     clientId++;
                     return new Client
                     {
-                        ClientId = clientId,
+                        Id = clientId,
                         ParentClientId = null,
                         Name = $"Grupo {s}",
                         CurrencyType = "BR",
@@ -52,7 +56,7 @@ namespace Sample.Persistence.Repositories
                             PostalCode = "00000-000",
                             Complement = "Complement"
                         },
-                        ChildrenClient =
+                        ChildrenChain =
                         [
                             .. factory.create5ChildrenClients(
                                 s,
@@ -80,14 +84,18 @@ namespace Sample.Persistence.Repositories
                 });
 
             var redeSeeds = Enumerable
+                .Range(0, 1) // 50k option
+                // .Range(0, 15000) // 1M option
+
                 //.Range(0, 750) // 50k option
-                .Range(0, 15000) // 1M option
+                // .Range(0, 150000) // 1M option
+                // .Range(0, 150) // 1M option
                 .Select(s =>
                 {
                     clientId++;
                     return new Client
                     {
-                        ClientId = clientId,
+                        Id = clientId,
                         ParentClientId = null,
                         Name = $"Rede {s}",
                         CurrencyType = "BR",
@@ -111,7 +119,7 @@ namespace Sample.Persistence.Repositories
                             PostalCode = "00000-000",
                             Complement = "Complement"
                         },
-                        ChildrenClient =
+                        ChildrenChain =
                         [
                             .. factory.create5ChildrenClients(
                                 s,
@@ -132,14 +140,17 @@ namespace Sample.Persistence.Repositories
                 });
 
             var parceiroSeeds = Enumerable
-                // .Range(0, 1000) // 50k option
-                .Range(0, 20000) // 1M option
+                .Range(0, 1) // 50k option
+                // .Range(0, 20000) // 1M option
+
+                // .Range(0, 300000) // 1M option
+                // .Range(0, 200) // 1M option
                 .Select(s =>
                 {
                     clientId++;
                     return new Client
                     {
-                        ClientId = clientId,
+                        Id = clientId,
                         ParentClientId = null,
                         Name = $"Parceiro {s}",
                         CurrencyType = "BR",
@@ -163,7 +174,7 @@ namespace Sample.Persistence.Repositories
                             PostalCode = "00000-000",
                             Complement = "Complement"
                         },
-                        ChildrenClient =
+                        ChildrenChain =
                         [
                             .. factory.create5ChildrenClients(
                                 s,
@@ -177,14 +188,18 @@ namespace Sample.Persistence.Repositories
                 });
 
             var hotelSeeds = Enumerable
+                .Range(0, 1) // 50k option
+                // .Range(0, 200000) // 1M option
+
                 // .Range(0, 10000) // 50k option
-                .Range(0, 200000) // 1M option
+                // .Range(0, 500000) // 1M option
+                // .Range(0, 200) // 1M option
                 .Select(s =>
                 {
                     clientId++;
                     return new Client
                     {
-                        ClientId = clientId,
+                        Id = clientId,
                         ParentClientId = null,
                         Name = $"Hotel {s}",
                         CurrencyType = "BR",
@@ -208,7 +223,7 @@ namespace Sample.Persistence.Repositories
                             PostalCode = "00000-000",
                             Complement = "Complement"
                         },
-                        ChildrenClient = []
+                        ChildrenChain = []
                     };
                 });
 
@@ -248,17 +263,17 @@ namespace Sample.Persistence.Repositories
 
             Expression<Func<Client, Client>> result = client => new Client()
             {
-                ClientId = client.ClientId,
+                Id = client.Id,
                 Name = client.Name,
                 Type = client.Type,
                 ParentClientId = client.ParentClientId,
-                ChildrenClient =
+                ChildrenChain =
                     currentDepth == maxDepth
                         ? new List<Client>()
                         : client
-                            .ChildrenClient.AsQueryable()
+                            .ChildrenChain.AsQueryable()
                             .Select(GetClientProjection(maxDepth, currentDepth))
-                            .OrderBy(y => y.ClientId)
+                            .OrderBy(y => y.Id)
                             .ToList()
             };
 
@@ -268,15 +283,15 @@ namespace Sample.Persistence.Repositories
         public async Task<Client> GetClient(int ClientId, bool includeChildren)
         {
             if (!includeChildren)
-                return await _dbContext.Clients.FirstOrDefaultAsync(c => c.ClientId == ClientId);
+                return await _dbContext.Clients.FirstOrDefaultAsync(c => c.Id == ClientId);
 
             var projectionTimer = new Stopwatch();
             projectionTimer.Start();
 
             var query = await _dbContext
-                .Clients.Where(c => c.ClientId == ClientId)
+                .Clients.Where(c => c.Id == ClientId)
                 .Select(GetClientProjection(4, 0))
-                .OrderBy(x => x.ClientId)
+                .OrderBy(x => x.Id)
                 .FirstAsync();
 
             projectionTimer.Stop();
@@ -317,13 +332,13 @@ namespace Sample.Persistence.Repositories
 
             foreach (var c in recursiveQuery)
             {
-                if (lookup.Contains(c.ClientId))
-                    c.ChildrenClient.ToList()
-                        .AddRange(lookup.Where(s => s.Key == c.ClientId).SelectMany(x => x));
+                if (lookup.Contains(c.Id))
+                    c.ChildrenChain.ToList()
+                        .AddRange(lookup.Where(s => s.Key == c.Id).SelectMany(x => x));
             }
 
             // var result = recursiveQuery.Where(c => c.ParentClientId == null).FirstOrDefault();
-            var result = recursiveQuery.Where(c => c.ClientId == ClientId).FirstOrDefault();
+            var result = recursiveQuery.Where(c => c.Id == ClientId).FirstOrDefault();
             recursivewiThObjectTimer.Stop();
 
             TimeSpan recursiveTimeTaken = recursiveTimer.Elapsed;
@@ -349,7 +364,7 @@ namespace Sample.Persistence.Repositories
 
         public async Task<List<Client>> GetClients()
         {
-            var query = _dbContext.Clients.OrderBy(x => x.ClientId).Take(20);
+            var query = _dbContext.Clients.OrderBy(x => x.Id).Take(20);
 
             return await query.ToListAsync();
         }
@@ -357,19 +372,16 @@ namespace Sample.Persistence.Repositories
         public async Task<List<Client>> GetClientsListWithSubClients()
         {
             var query = _dbContext
-                .Clients.Where(c => c.ParentClient == null)
+                .Clients.Where(c => c.ParentClientId == null)
                 .Select(GetClientProjection(4, 0))
-                .OrderBy(x => x.ClientId);
+                .OrderBy(x => x.Id);
 
             return await query.ToListAsync();
         }
 
         public async Task<List<Client>> GetClientsByType(string Type)
         {
-            var query = _dbContext
-                .Clients.Where(c => c.Type == Type)
-                .OrderBy(x => x.ClientId)
-                .Take(20);
+            var query = _dbContext.Clients.Where(c => c.Type == Type).OrderBy(x => x.Id).Take(20);
 
             return await query.ToListAsync();
         }

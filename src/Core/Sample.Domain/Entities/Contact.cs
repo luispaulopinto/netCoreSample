@@ -2,9 +2,9 @@ using Sample.Domain.Common;
 
 namespace Sample.Domain.Entities
 {
-    public class Contact : AuditableEntity
+    public class Contact : AuditableEntity<int>
     {
-        public int ContactId { get; set; }
+        // public int ContactId { get; set; }
 
         public string FirstName { get; set; }
 

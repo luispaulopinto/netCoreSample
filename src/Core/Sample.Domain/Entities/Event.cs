@@ -1,11 +1,10 @@
-﻿
-using Sample.Domain.Common;
+﻿using Sample.Domain.Common;
 
 namespace Sample.Domain.Entities
 {
-    public class Event : AuditableEntity
+    public class Event : AuditableEntity<Guid>
     {
-        public Guid EventId { get; set; }
+        // public Guid EventId { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Price { get; set; }
         public string? Artist { get; set; }
@@ -14,6 +13,5 @@ namespace Sample.Domain.Entities
         public string? ImageUrl { get; set; }
         public Guid CategoryId { get; set; }
         public Category Category { get; set; } = default!;
-
     }
 }

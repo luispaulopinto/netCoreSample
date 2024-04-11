@@ -19,7 +19,7 @@ namespace Sample.Application.Features.Clients.Commands.UpdateClient
 
         public async Task Handle(UpdateClientCommand request, CancellationToken cancellationToken)
         {
-            var clientToUpdate = await _clientRepository.GetByIdAsync(request.ClientId);
+            var clientToUpdate = await _clientRepository.GetByIdAsync(request.Id);
 
             if (clientToUpdate == null)
                 throw new NotFoundException("Client");

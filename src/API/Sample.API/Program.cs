@@ -1,10 +1,7 @@
 using Sample.Api;
-
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateBootstrapLogger();
 
 Log.Information("Sample API starting");
 
@@ -13,21 +10,20 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog(
-      (context, services, configuration) => configuration
-          .ReadFrom.Configuration(context.Configuration)
-          .ReadFrom.Services(services)
-          .Enrich.FromLogContext()
-          .WriteTo.Console(),
-      true
-  );
+    (context, services, configuration) =>
+        configuration
+            .ReadFrom.Configuration(context.Configuration)
+            .ReadFrom.Services(services)
+            .Enrich.FromLogContext()
+            .WriteTo.Console(),
+    true
+);
 
-var app = builder
-       .ConfigureServices()
-       .ConfigurePipeline();
+var app = builder.ConfigureServices().ConfigurePipeline();
 
 app.UseSerilogRequestLogging();
 
-await app.ResetDatabaseAsync();
+//await app.ResetDatabaseAsync();
 
 app.Run();
 

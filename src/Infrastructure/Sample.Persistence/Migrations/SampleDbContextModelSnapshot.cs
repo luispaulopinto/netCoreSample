@@ -85,40 +85,60 @@ namespace Sample.Persistence.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Category", b =>
+            modelBuilder.Entity("Sample.Domain.Entities.City", b =>
                 {
-                    b.Property<Guid>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<string>("CreatedBy")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Admin1Code")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LastModifiedBy")
+                    b.Property<string>("Admin2Code")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("CountryId1")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("GeonameId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("CategoryId");
+                    b.Property<int>("StateId")
+                        .HasColumnType("integer");
 
-                    b.ToTable("Categories");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId1");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Client", b =>
                 {
-                    b.Property<int>("ClientId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClientId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -178,912 +198,20 @@ namespace Sample.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("ClientId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ParentClientId");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            ClientId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Grupo AAAA",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Grupo AAAA",
-                            Type = "Grupo"
-                        },
-                        new
-                        {
-                            ClientId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede AAAA",
-                            Origin = "Origem",
-                            ParentClientId = 1,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede AAAA",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 3,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  AAAA",
-                            Origin = "Origem",
-                            ParentClientId = 2,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  AAAA",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 4,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAAA1",
-                            Origin = "Origem",
-                            ParentClientId = 3,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAAA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 5,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAAA1",
-                            Origin = "Origem",
-                            ParentClientId = 3,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAAA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 42,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede AAAB",
-                            Origin = "Origem",
-                            ParentClientId = 1,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede AAAB",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 43,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  AAAB",
-                            Origin = "Origem",
-                            ParentClientId = 42,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  AAAB",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 44,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAAB",
-                            Origin = "Origem",
-                            ParentClientId = 43,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAAB",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 45,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAAB",
-                            Origin = "Origem",
-                            ParentClientId = 43,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAAB",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 6,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Grupo BBBB",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Grupo BBBB",
-                            Type = "Grupo"
-                        },
-                        new
-                        {
-                            ClientId = 7,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede BBBB",
-                            Origin = "Origem",
-                            ParentClientId = 6,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede BBBB",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 8,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  BBBB",
-                            Origin = "Origem",
-                            ParentClientId = 7,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  BBBB",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 9,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBBB1",
-                            Origin = "Origem",
-                            ParentClientId = 8,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBBB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 10,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBBB1",
-                            Origin = "Origem",
-                            ParentClientId = 8,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBBB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 47,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  BBBC",
-                            Origin = "Origem",
-                            ParentClientId = 6,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  BBBC",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 48,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBBC1",
-                            Origin = "Origem",
-                            ParentClientId = 47,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBBC1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 49,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBBC1",
-                            Origin = "Origem",
-                            ParentClientId = 47,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBBC1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 11,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Grupo CCCC",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Grupo CCCC",
-                            Type = "Grupo"
-                        },
-                        new
-                        {
-                            ClientId = 12,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede CCCC",
-                            Origin = "Origem",
-                            ParentClientId = 11,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede CCCC",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 13,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  CCCC",
-                            Origin = "Origem",
-                            ParentClientId = 12,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  CCCC",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 14,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  CCCC1",
-                            Origin = "Origem",
-                            ParentClientId = 13,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  CCCC1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 15,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  CCCC1",
-                            Origin = "Origem",
-                            ParentClientId = 13,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  CCCC1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 50,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  CCCD",
-                            Origin = "Origem",
-                            ParentClientId = 12,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  CCCD",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 51,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  CCCD1",
-                            Origin = "Origem",
-                            ParentClientId = 50,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  CCCD1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 52,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  CCCD1",
-                            Origin = "Origem",
-                            ParentClientId = 50,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  CCCD1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 16,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Grupo DDDD",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Grupo DDDD",
-                            Type = "Grupo"
-                        },
-                        new
-                        {
-                            ClientId = 17,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede DDDD",
-                            Origin = "Origem",
-                            ParentClientId = 16,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede DDDD",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 18,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  DDDD",
-                            Origin = "Origem",
-                            ParentClientId = 17,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  DDDD",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 19,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  DDDD1",
-                            Origin = "Origem",
-                            ParentClientId = 18,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  DDDD1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 20,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  DDDD1",
-                            Origin = "Origem",
-                            ParentClientId = 18,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  DDDD1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 53,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  DDDE1",
-                            Origin = "Origem",
-                            ParentClientId = 16,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  DDDE1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 54,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  DDDE1",
-                            Origin = "Origem",
-                            ParentClientId = 16,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  DDDE1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 21,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Grupo EEEE",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Grupo EEEE",
-                            Type = "Grupo"
-                        },
-                        new
-                        {
-                            ClientId = 22,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede EEEE",
-                            Origin = "Origem",
-                            ParentClientId = 21,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede EEEE",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 23,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  EEEE",
-                            Origin = "Origem",
-                            ParentClientId = 22,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  EEEE",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 24,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  EEEE1",
-                            Origin = "Origem",
-                            ParentClientId = 23,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  EEEE1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 25,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  EEEE1",
-                            Origin = "Origem",
-                            ParentClientId = 23,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  EEEE1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 26,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede AAA",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede AAA",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 27,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  AAA",
-                            Origin = "Origem",
-                            ParentClientId = 26,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  AAA",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 28,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAA1",
-                            Origin = "Origem",
-                            ParentClientId = 27,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 29,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AAA1",
-                            Origin = "Origem",
-                            ParentClientId = 27,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AAA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 30,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Rede BBB",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Rede BBB",
-                            Type = "Rede"
-                        },
-                        new
-                        {
-                            ClientId = 31,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  BBB",
-                            Origin = "Origem",
-                            ParentClientId = 30,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  BBB",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 32,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBB1",
-                            Origin = "Origem",
-                            ParentClientId = 31,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 33,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BBB1",
-                            Origin = "Origem",
-                            ParentClientId = 31,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BBB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 34,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  AA",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  AA",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 35,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AA1",
-                            Origin = "Origem",
-                            ParentClientId = 34,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 36,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  AA1",
-                            Origin = "Origem",
-                            ParentClientId = 34,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  AA1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 37,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Parceiro  BB",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Parceiro  BB",
-                            Type = "Parceiro"
-                        },
-                        new
-                        {
-                            ClientId = 38,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BB1",
-                            Origin = "Origem",
-                            ParentClientId = 37,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 39,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  BB1",
-                            Origin = "Origem",
-                            ParentClientId = 37,
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  BB1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 40,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  A1",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  A1",
-                            Type = "Hotel"
-                        },
-                        new
-                        {
-                            ClientId = 41,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrencyType = "REAL",
-                            IsStateRegistrationFree = false,
-                            Language = "BR",
-                            LogoURL = "LogoURL",
-                            Name = "Hotel  B1",
-                            Origin = "Origem",
-                            RegisteredNumber = "000",
-                            StateRegistration = "00000",
-                            TimeZone = "Brasilia",
-                            TradeName = "Hotel  B1",
-                            Type = "Hotel"
-                        });
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Contact", b =>
                 {
-                    b.Property<int>("ContactId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContactId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CellPhone")
                         .IsRequired()
@@ -1123,13 +251,81 @@ namespace Sample.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("ContactId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Continent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ISOCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Continent");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContinentIsoCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryIsoCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("GeonameId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name_enUS")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name_esES")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name_ptBR")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name_ptPT")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContinentIsoCode");
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Department", b =>
@@ -1153,61 +349,13 @@ namespace Sample.Persistence.Migrations
                     b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Event", b =>
-                {
-                    b.Property<Guid>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Artist")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("integer");
-
-                    b.HasKey("EventId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("Sample.Domain.Entities.InvoicingAddress", b =>
                 {
-                    b.Property<int>("InvoicingAddressId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("InvoicingAddressId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -1234,6 +382,9 @@ namespace Sample.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("InvoicingInfoId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -1259,19 +410,30 @@ namespace Sample.Persistence.Migrations
                     b.Property<int>("StreetNumber")
                         .HasColumnType("integer");
 
-                    b.HasKey("InvoicingAddressId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId")
+                        .IsUnique();
+
+                    b.HasIndex("InvoicingInfoId")
                         .IsUnique();
 
                     b.ToTable("InvoicingAddress");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Order", b =>
+            modelBuilder.Entity("Sample.Domain.Entities.InvoicingInfo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ClientIdParentLink")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -1279,27 +441,96 @@ namespace Sample.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("OrderPaid")
-                        .HasColumnType("boolean");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("OrderPlaced")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("RegisteredNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("OrderTotal")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("TradeName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
+                    b.ToTable("InvoicingInfo");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("character(6)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Language");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.State", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Admin1Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("CountryId1")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("GeonameId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId1");
+
+                    b.ToTable("State");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Address", b =>
@@ -1313,10 +544,29 @@ namespace Sample.Persistence.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("Sample.Domain.Entities.City", b =>
+                {
+                    b.HasOne("Sample.Domain.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sample.Domain.Entities.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+
+                    b.Navigation("State");
+                });
+
             modelBuilder.Entity("Sample.Domain.Entities.Client", b =>
                 {
                     b.HasOne("Sample.Domain.Entities.Client", "ParentClient")
-                        .WithMany("ChildrenClient")
+                        .WithMany("ChildrenChain")
                         .HasForeignKey("ParentClientId");
 
                     b.Navigation("ParentClient");
@@ -1337,31 +587,57 @@ namespace Sample.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Event", b =>
+            modelBuilder.Entity("Sample.Domain.Entities.Country", b =>
                 {
-                    b.HasOne("Sample.Domain.Entities.Category", "Category")
-                        .WithMany("Events")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("Sample.Domain.Entities.Continent", "Continent")
+                        .WithMany("Countries")
+                        .HasForeignKey("ContinentIsoCode")
+                        .HasPrincipalKey("ISOCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("Continent");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.InvoicingAddress", b =>
                 {
                     b.HasOne("Sample.Domain.Entities.Client", "Client")
-                        .WithOne("InvoicingAddres")
+                        .WithOne("InvoicingAddress")
                         .HasForeignKey("Sample.Domain.Entities.InvoicingAddress", "ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sample.Domain.Entities.InvoicingInfo", "InvoicingInfo")
+                        .WithOne("InvoicingAddress")
+                        .HasForeignKey("Sample.Domain.Entities.InvoicingAddress", "InvoicingInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("InvoicingInfo");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.InvoicingInfo", b =>
+                {
+                    b.HasOne("Sample.Domain.Entities.Client", "Client")
+                        .WithOne("InvoicingInfo")
+                        .HasForeignKey("Sample.Domain.Entities.InvoicingInfo", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Category", b =>
+            modelBuilder.Entity("Sample.Domain.Entities.State", b =>
                 {
-                    b.Navigation("Events");
+                    b.HasOne("Sample.Domain.Entities.Country", "Country")
+                        .WithMany("States")
+                        .HasForeignKey("CountryId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Client", b =>
@@ -1369,17 +645,41 @@ namespace Sample.Persistence.Migrations
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("ChildrenClient");
+                    b.Navigation("ChildrenChain");
 
                     b.Navigation("Contacts");
 
-                    b.Navigation("InvoicingAddres")
+                    b.Navigation("InvoicingAddress")
                         .IsRequired();
+
+                    b.Navigation("InvoicingInfo")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Continent", b =>
+                {
+                    b.Navigation("Countries");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Country", b =>
+                {
+                    b.Navigation("States");
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Contacts");
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.InvoicingInfo", b =>
+                {
+                    b.Navigation("InvoicingAddress")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.State", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }

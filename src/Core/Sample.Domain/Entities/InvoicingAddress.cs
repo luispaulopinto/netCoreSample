@@ -2,9 +2,9 @@ using Sample.Domain.Common;
 
 namespace Sample.Domain.Entities
 {
-    public class InvoicingAddress : AuditableEntity
+    public class InvoicingAddress : AuditableEntity<int>
     {
-        public int InvoicingAddressId { get; set; }
+        // public int InvoicingAddressId { get; set; }
 
         public string Country { get; set; }
 
@@ -27,5 +27,9 @@ namespace Sample.Domain.Entities
         public int ClientId { get; set; }
 
         public Client Client { get; set; }
+
+        public int InvoicingInfoId { get; set; }
+
+        public InvoicingInfo InvoicingInfo { get; set; }
     }
 }

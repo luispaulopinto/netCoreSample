@@ -1,12 +1,12 @@
-﻿using Sample.Application.Responses;
+﻿// using Sample.Application.Responses;
 
-namespace Sample.Application.Features.Categories.Commands.CreateCateogry
-{
-    public class CreateCategoryCommandResponse : BaseResponse
-    {
-        public CreateCategoryCommandResponse()
-            : base() { }
+// namespace Sample.Application.Features.Categories.Commands.CreateCateogry
+// {
+//     public class CreateCategoryCommandResponse : BaseResponse
+//     {
+//         public CreateCategoryCommandResponse()
+//             : base() { }
 
-        public CreateCategoryDto Category { get; set; } = default!;
-    }
-}
+//         public CreateCategoryDto Category { get; set; } = default!;
+//     }
+// }

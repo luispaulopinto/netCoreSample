@@ -7,7 +7,7 @@ namespace Sample.Application.Features.Clients.Queries.GetClients
 {
     public class ClientsListVm
     {
-        public int ClientId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

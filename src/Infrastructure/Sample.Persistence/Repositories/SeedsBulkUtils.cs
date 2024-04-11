@@ -94,7 +94,7 @@ namespace Sample.Persistence.Repositories
                 clients.Add(
                     new Client
                     {
-                        ClientId = clientId,
+                        Id = clientId,
                         ParentClientId = parentId,
                         Name = $"{currentPath} {number}",
                         CurrencyType = "BR",
@@ -118,7 +118,7 @@ namespace Sample.Persistence.Repositories
                             PostalCode = "00000-000",
                             Complement = "Complement"
                         },
-                        ChildrenClient = create5ChildrenClients(
+                        ChildrenChain = create5ChildrenClients(
                             number,
                             nextPath,
                             nextType,

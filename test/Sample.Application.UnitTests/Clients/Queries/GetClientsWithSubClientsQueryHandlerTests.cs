@@ -9,7 +9,6 @@ using Shouldly;
 
 namespace Sample.Application.UnitTests.Categories.Queries
 {
-
     // dotnet test --filter Category=CLients
     // dotnet test --filter "Category=CLients|Category=xxx"
     [Trait("Category", "Clients")]
@@ -31,7 +30,6 @@ namespace Sample.Application.UnitTests.Categories.Queries
         }
 
         [Fact]
-
         // [Fact(Skip = 'dont run')]
         public async Task GetClientsWithSubClients()
         {
@@ -48,13 +46,13 @@ namespace Sample.Application.UnitTests.Categories.Queries
             result.ShouldBeOfType<List<ClientListWithSubClientsVm>>();
 
             result.Count.ShouldBe(1);
-            result.First().ChildrenClient.Count.ShouldBe(1);
-            result.First().ChildrenClient.First().ChildrenClient.Count.ShouldBe(1);
+            result.First().ChildrenChain.Count.ShouldBe(1);
+            result.First().ChildrenChain.First().ChildrenChain.Count.ShouldBe(1);
             result
                 .First()
-                .ChildrenClient.First()
-                .ChildrenClient.First()
-                .ChildrenClient.Count.ShouldBe(2);
+                .ChildrenChain.First()
+                .ChildrenChain.First()
+                .ChildrenChain.Count.ShouldBe(2);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Sample.Application.Features.Clients.Commands.UpdateClient
 {
     public class UpdateClientCommand : IRequest
     {
-        public int ClientId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
 
         public string? Type { get; set; }

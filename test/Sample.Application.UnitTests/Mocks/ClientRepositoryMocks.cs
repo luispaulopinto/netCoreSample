@@ -12,38 +12,38 @@ namespace Sample.Application.UnitTests.Mocks
             {
                 new Client
                 {
-                    ClientId = 1,
+                    Id = 1,
                     Name = "Grupo AAAA",
                     ParentClientId = null,
                     Type = "Grupo",
-                    ChildrenClient =
+                    ChildrenChain =
                     [
                         new Client
                         {
-                            ClientId = 2,
+                            Id = 2,
                             Name = "Rede AAAA",
                             ParentClientId = 1,
                             Type = "Rede",
-                            ChildrenClient =
+                            ChildrenChain =
                             [
                                 new Client
                                 {
-                                    ClientId = 3,
+                                    Id = 3,
                                     Name = "Parceiro  AAAA",
                                     ParentClientId = 2,
                                     Type = "Parceiro",
-                                    ChildrenClient =
+                                    ChildrenChain =
                                     [
                                         new Client
                                         {
-                                            ClientId = 4,
+                                            Id = 4,
                                             Name = "Hotel  AAAA1",
                                             ParentClientId = 3,
                                             Type = "Hotel"
                                         },
                                         new Client
                                         {
-                                            ClientId = 5,
+                                            Id = 5,
                                             Name = "Hotel  AAAA1",
                                             ParentClientId = 3,
                                             Type = "Hotel"
